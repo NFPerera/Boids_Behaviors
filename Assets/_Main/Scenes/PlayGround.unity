@@ -247,9 +247,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boidPrefab: {fileID: 1777373872607930796, guid: b3b9369565573514f9beabc6aa4e34ad, type: 3}
+  is2D: 0
   spawnCenter: {x: 0, y: 0, z: 0}
   spawnAreaHalfExtent: {x: 20, y: 20, z: 20}
-  boidsToSpawn: 10
+  boidsToSpawn: 20
 --- !u!4 &1641136868
 Transform:
   m_ObjectHideFlags: 0
@@ -301,7 +302,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
