@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914a8deaf24643a3977d04127458865f, type: 3}
+  m_Name: BoidManagerData
+  m_EditorClassIdentifier: 
+  lineState: {fileID: 11400000, guid: 1d150638b5772e849b5feb36c1ac73f0, type: 2}
+  obstacleAvoidanceState: {fileID: 11400000, guid: 264d443fc56ca3b4aa20aca88d3d3224, type: 2}

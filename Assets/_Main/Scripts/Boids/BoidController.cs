@@ -1,23 +1,31 @@
 ﻿using System;
+using _Main.Scripts.Managers;
+using _Main.Scripts.Steering_Behaviours;
+using _Main.Scripts.SteeringData;
 using UnityEngine;
 
 namespace _Main.Scripts.Boids
 {
     public class BoidController : MonoBehaviour
     {
-        
-        [SerializeField] private float movementSpeed;
         private BoidModel p_model;
 
+        private SteeringDataState m_currSteeringBehaviour;
 
-        private void Awake()
+        private void Start()
         {
             p_model = GetComponent<BoidModel>();
+            m_currSteeringBehaviour = BoidsManager.Singleton.GetSteeringDataStateById(SteeringsId.Line);
         }
 
         private void Update()
         {
-            p_model.Move(p_model.p_dir,movementSpeed);
+            var dir = m_currSteeringBehaviour.GetDir(p_model);
+            p_model.Move((gameObject.transform.forward + dir), p_model.GetData().MovementSpeed);
         }
+
+        public void SetSteeringBh(SteeringDataState p_steeringDataState) =>
+            m_currSteeringBehaviour = p_steeringDataState;
+
     }
 }
