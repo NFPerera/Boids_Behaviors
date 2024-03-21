@@ -10,6 +10,7 @@ namespace _Main.Scripts
     public class BoidsManager : MonoBehaviour
     {
         [SerializeField] private BoidModel boidPrefab;
+        [SerializeField] private bool is2D;
         [SerializeField] private Vector3 spawnCenter;
         [SerializeField] private Vector3 spawnAreaHalfExtent;
         [SerializeField] private int boidsToSpawn;
@@ -37,23 +38,15 @@ namespace _Main.Scripts
         {
             SpawnBoids(boidsToSpawn);
         }
+        
 
-        private void Update()
+        public void CheckForBounds(BoidModel p_model)
         {
-            
+            var boidPos = p_model.gameObject.transform.position;
+            if(m_arenaBounds.Contains(boidPos))
+                return;
 
-            for (int i = 0; i < m_allBoids.Count; i++)
-            {
-                var l_boid = m_allBoids[i];
-                var boidPos = l_boid.gameObject.transform.position;
-                Debug.Log($"Chequeando {m_arenaBounds.Contains(boidPos)}");
-                if(m_arenaBounds.Contains(boidPos))
-                    return;
-
-                Debug.Log($"SE PASO EN {m_arenaBounds.ClosestPoint(boidPos)}");
-                l_boid.gameObject.transform.position = -m_arenaBounds.ClosestPoint(boidPos);
-                Debug.Log($"Lo tepeo a {l_boid.gameObject.transform.position}");
-            }
+            p_model.gameObject.transform.position = -m_arenaBounds.ClosestPoint(boidPos);
         }
 
         private void SpawnBoids(int p_boidsToSpawn)
@@ -61,9 +54,19 @@ namespace _Main.Scripts
             for (int i = 0; i < p_boidsToSpawn; i++)
             {
                 var l_boid = Instantiate(boidPrefab);
-
-                var l_rndSpawnPoint = VectorExtentions.GetRandomRangeVector3(-spawnAreaHalfExtent, spawnAreaHalfExtent);
-                var l_rndDir = Random.onUnitSphere;
+                Vector3 l_rndSpawnPoint;
+                Vector3 l_rndDir;
+                if (is2D)
+                {
+                    l_rndSpawnPoint = VectorExtentions.GetRandomRangeVector2(-spawnAreaHalfExtent, spawnAreaHalfExtent);
+                    l_rndDir = VectorExtentions.GetRandomDirVector2();
+                }
+                else
+                {
+                    l_rndSpawnPoint = VectorExtentions.GetRandomRangeVector3(-spawnAreaHalfExtent, spawnAreaHalfExtent);
+                    l_rndDir = Random.onUnitSphere;
+                }
+                
                 
                 l_boid.Initialize(spawnCenter + l_rndSpawnPoint, l_rndDir);
                 
