@@ -29,6 +29,17 @@ namespace _Main.Scripts.DevelopmentUtilities
             );
         }
 
+        public static Vector2 GetRandomRangeVector2(Vector2 minRange, Vector2 maxRange)
+        {
+            return new Vector2(Random.Range(minRange.x, maxRange.x), Random.Range(minRange.y, maxRange.y));
+        }
+        
+        public static Vector2 GetRandomDirVector2(float p_minAngle, float p_maxAngle){
+            float random = Random.value * p_minAngle + p_maxAngle;
+            return new Vector2(Mathf.Cos(random), Mathf.Sin(random)).normalized;
+        }
+        
+        public static Vector2 GetRandomDirVector2() => Random.insideUnitCircle.normalized;
         #endregion
 
         #region Vector3
@@ -102,7 +113,13 @@ namespace _Main.Scripts.DevelopmentUtilities
             else if (l_sqrMag > l_sqrMax) return p_v.normalized * p_max;
             else return p_v;
         }
+        
+        public static Vector3 GetRandomRangeVector3(Vector3 minRange, Vector3 maxRange)
+        {
+            return new Vector3(Random.Range(minRange.x, maxRange.x), Random.Range(minRange.y, maxRange.y), Random.Range(minRange.z, maxRange.z) );
+        }
 
+        
         #endregion
 
         #region Vector4
