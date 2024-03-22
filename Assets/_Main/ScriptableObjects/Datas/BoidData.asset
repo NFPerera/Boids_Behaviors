@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a57d703d7fa48a7b2189f980af57562, type: 3}
   m_Name: BoidData
   m_EditorClassIdentifier: 
-  <MovementSpeed>k__BackingField: 13.99
-  <ViewRange>k__BackingField: 5
-  <AlignmentRadius>k__BackingField: 10
+  <SteeringBehaviours>k__BackingField:
+  - {fileID: 11400000, guid: 4d06f8acf072db740b260d3a73a521f6, type: 2}
+  - {fileID: 11400000, guid: 59e3060a3ee24bc4da50c58253b32008, type: 2}
+  - {fileID: 11400000, guid: 264d443fc56ca3b4aa20aca88d3d3224, type: 2}
+  <TurningSpeed>k__BackingField: 0.1
+  <MovementSpeed>k__BackingField: 20
+  <ViewRange>k__BackingField: 6
+  <ViewAngle>k__BackingField: 270
+  <AlignmentRadius>k__BackingField: 1
   <CohesionRadius>k__BackingField: 3
-  <ViewAngle>k__BackingField: 180
   <ObstacleMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 384
-  <ObsAvoidanceWeight>k__BackingField: 0.03
-  <AlignmentWeight>k__BackingField: 50
-  <CohesionWeight>k__BackingField: 0.1
+  <ObsAvoidanceWeight>k__BackingField: 20
+  <AlignmentWeight>k__BackingField: 30
+  <CohesionWeight>k__BackingField: 20
