@@ -12,6 +12,7 @@ namespace _Main.Scripts.Managers
     public class BoidsManager : MonoBehaviour
     {
         [SerializeField] private BoidManagerData data;
+        [SerializeField] private BoidData boidData;
         [SerializeField] private BoidModel boidPrefab;
         [SerializeField] private bool is2D;
         [SerializeField] private Vector3 spawnCenter;
@@ -109,11 +110,22 @@ namespace _Main.Scripts.Managers
         {
             for (int i = 0; i < m_allBoids.Count; i++)
             {
-                m_allBoids[i].ChangeSteeringBehaviour(p_id);
+                //m_allBoids[i].ChangeSteeringBehaviour(p_id);
             }
         }
         public SteeringDataState GetSteeringDataStateById(SteeringsId p_id) => m_allSteeringDataStates[p_id];
 
+        public void SetBoidsSpeed(float p_f) => boidData.SetMovementSpeed(p_f);
+        public void SetBoidViewRange(float p_f) => boidData.SetViewRange(p_f);
+        public void SetBoidViewAngle(float p_f) => boidData.SetViewAngle(p_f);
+        
+        public void SetBoidObsAvoid(float p_f) => boidData.SetObsAvoidanceWeight(p_f);
+        public void SetBoidCohesion(float p_f) => boidData.SetCohesionWeight(p_f);
+        public void SetBoidAlignment(float p_f) => boidData.SetAlignmentWeight(p_f);
+        public void SetBoidAlignmentRadius(float p_f) => boidData.SetAlignmentRadius(p_f);
+        public void SetBoidCohesionRadius(float p_f) => boidData.SetCohesionRadius(p_f);
+        
+        
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {

@@ -14,7 +14,7 @@ namespace _Main.Scripts.Steering_Behaviours
             int count = 0;
             
             var l_allNeighbors = p_model.GetNeighbors();
-            for (int i = 0; i < l_allNeighbors.Length; i++)
+            for (int i = 0; i < l_allNeighbors.Count; i++)
             {
                 var l_transform = l_allNeighbors[i].transform;
                 if (l_transform != p_model.transform 
@@ -30,7 +30,6 @@ namespace _Main.Scripts.Steering_Behaviours
                 l_targetPoint /= count;
                 return (l_targetPoint - p_model.transform.position).normalized * p_model.GetData().CohesionWeight;
             }
-
             return Vector3.zero;
         }
     }

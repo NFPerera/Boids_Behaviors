@@ -13,7 +13,7 @@ namespace _Main.Scripts.Steering_Behaviours
 
             int l_count = 0;
             var l_allNeighbors = p_model.GetNeighbors();
-            for (int i = 0; i < l_allNeighbors.Length; i++)
+            for (int i = 0; i < l_allNeighbors.Count; i++)
             {
                 var l_transform = l_allNeighbors[i].transform;
                 if ((l_transform != p_model.transform)
@@ -29,7 +29,6 @@ namespace _Main.Scripts.Steering_Behaviours
                 l_averageAlignmentDirection /= l_count;
                 l_averageAlignmentDirection.Normalize();
             }
-
             return l_averageAlignmentDirection * p_model.GetData().AlignmentWeight;
         }
     }
