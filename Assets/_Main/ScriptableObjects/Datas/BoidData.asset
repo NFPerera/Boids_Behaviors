@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MovementSpeed>k__BackingField: 13.99
   <ViewRange>k__BackingField: 5
+  <AlignmentRadius>k__BackingField: 10
+  <CohesionRadius>k__BackingField: 3
   <ViewAngle>k__BackingField: 180
   <ObstacleMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 384
   <ObsAvoidanceWeight>k__BackingField: 0.03
+  <AlignmentWeight>k__BackingField: 50
+  <CohesionWeight>k__BackingField: 0.1

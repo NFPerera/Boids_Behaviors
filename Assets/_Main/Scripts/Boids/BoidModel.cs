@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using _Main.Scripts.DevelopmentUtilities;
 using _Main.Scripts.Managers;
 using _Main.Scripts.SteeringData;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace _Main.Scripts.Boids
@@ -66,7 +66,12 @@ namespace _Main.Scripts.Boids
             m_2dMovement = false;
             m_rigidbody.constraints = RigidbodyConstraints.None;
         }
-        
+
+        public Collider[] GetNeighbors()
+        {
+            return Physics.OverlapSphere(transform.position, data.ViewRange, gameObject.layer);
+            
+        }
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {

@@ -4,5 +4,7 @@
     {
         Line,
         ObstacleAvoidance,
+        Alignment,
+        Cohesion
     }
 }

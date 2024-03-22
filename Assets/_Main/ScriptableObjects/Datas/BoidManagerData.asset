@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineState: {fileID: 11400000, guid: 1d150638b5772e849b5feb36c1ac73f0, type: 2}
   obstacleAvoidanceState: {fileID: 11400000, guid: 264d443fc56ca3b4aa20aca88d3d3224, type: 2}
+  alignmentState: {fileID: 11400000, guid: 4d06f8acf072db740b260d3a73a521f6, type: 2}
+  cohesionState: {fileID: 11400000, guid: 59e3060a3ee24bc4da50c58253b32008, type: 2}

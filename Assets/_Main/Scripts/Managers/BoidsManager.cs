@@ -40,6 +40,8 @@ namespace _Main.Scripts.Managers
             
             m_allSteeringDataStates.Add(SteeringsId.Line, data.lineState);
             m_allSteeringDataStates.Add(SteeringsId.ObstacleAvoidance, data.obstacleAvoidanceState);
+            m_allSteeringDataStates.Add(SteeringsId.Cohesion, data.cohesionState);
+            m_allSteeringDataStates.Add(SteeringsId.Alignment, data.alignmentState);
         }
 
         private void Start()
@@ -56,6 +58,14 @@ namespace _Main.Scripts.Managers
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 ChangeAllBoidsSteeringBh(SteeringsId.ObstacleAvoidance);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                ChangeAllBoidsSteeringBh(SteeringsId.Alignment);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                ChangeAllBoidsSteeringBh(SteeringsId.Cohesion);
             }
         }
 
