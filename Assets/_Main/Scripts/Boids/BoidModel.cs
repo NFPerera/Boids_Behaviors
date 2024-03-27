@@ -5,9 +5,12 @@ using _Main.Scripts.Managers;
 using _Main.Scripts.SteeringData;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Main.Scripts.Boids
 {
+    [RequireComponent(typeof(BoidController))]
+    [RequireComponent(typeof(BoidView))]
     public class BoidModel : MonoBehaviour, IBoid
     {
         [SerializeField] private BoidData data;
@@ -17,7 +20,7 @@ namespace _Main.Scripts.Boids
         private BoidController m_controller;
         private Rigidbody m_rigidbody;
         private bool m_2dMovement;
-        private Vector3 m_wantedDir;
+        public Vector3 WantedDir { get; private set; }
 
         private void Awake()
         {
@@ -42,13 +45,13 @@ namespace _Main.Scripts.Boids
         public BoidData GetData() => data;
         public void Move(Vector3 p_dir, float p_speed)
         {
-            m_wantedDir = p_dir;
+            WantedDir = p_dir;
             if(m_2dMovement)
             {
-                m_wantedDir = m_wantedDir.Xyo();
+                WantedDir = WantedDir.Xyo();
             }
 
-            var lerp_dir = Vector3.Lerp(transform.forward, m_wantedDir, Time.deltaTime * data.TurningSpeed);
+            var lerp_dir = Vector3.Lerp(transform.forward, WantedDir, Time.deltaTime * data.TurningSpeed);
             
             transform.position += lerp_dir * (p_speed * Time.deltaTime);
             transform.LookAt(transform.position + lerp_dir);
@@ -91,17 +94,7 @@ namespace _Main.Scripts.Boids
         }
 
 
-#if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, data.ViewRange);
-            Handles.color = Color.red;
-            Gizmos.DrawLine(transform.position, transform.position + m_wantedDir*5);
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawLine(transform.position, transform.position + transform.forward*5);
-        }
-#endif
+
         
     }
 }
