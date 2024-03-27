@@ -39,10 +39,9 @@ namespace _Main.Scripts.Managers
             m_arenaBounds.center = spawnCenter;
             m_arenaBounds.extents = spawnAreaHalfExtent;
             
-            m_allSteeringDataStates.Add(SteeringsId.Line, data.lineState);
-            m_allSteeringDataStates.Add(SteeringsId.ObstacleAvoidance, data.obstacleAvoidanceState);
-            m_allSteeringDataStates.Add(SteeringsId.Cohesion, data.cohesionState);
-            m_allSteeringDataStates.Add(SteeringsId.Alignment, data.alignmentState);
+            m_allSteeringDataStates.Add(SteeringsId.ObstacleAvoidance, data.ObstacleAvoidanceState);
+            m_allSteeringDataStates.Add(SteeringsId.Cohesion, data.CohesionState);
+            m_allSteeringDataStates.Add(SteeringsId.Alignment, data.AlignmentState);
         }
 
         private void Start()

@@ -17,14 +17,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 59e3060a3ee24bc4da50c58253b32008, type: 2}
   - {fileID: 11400000, guid: 264d443fc56ca3b4aa20aca88d3d3224, type: 2}
   <TurningSpeed>k__BackingField: 0.1
-  <MovementSpeed>k__BackingField: 20
-  <ViewRange>k__BackingField: 6
-  <ViewAngle>k__BackingField: 270
-  <AlignmentRadius>k__BackingField: 1
-  <CohesionRadius>k__BackingField: 3
+  <MovementSpeed>k__BackingField: 0.2
+  <ViewRange>k__BackingField: 100.4
+  <ViewAngle>k__BackingField: 8.7
+  <AlignmentRadius>k__BackingField: 5
+  <CohesionRadius>k__BackingField: 5
   <ObstacleMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 384
-  <ObsAvoidanceWeight>k__BackingField: 20
+  <ObsAvoidanceWeight>k__BackingField: 60
   <AlignmentWeight>k__BackingField: 30
   <CohesionWeight>k__BackingField: 20

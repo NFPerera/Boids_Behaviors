@@ -16,11 +16,11 @@ namespace _Main.Scripts.Steering_Behaviours
             var l_allNeighbors = p_model.GetNeighbors();
             for (int i = 0; i < l_allNeighbors.Count; i++)
             {
-                var l_transform = l_allNeighbors[i].transform;
-                if (l_transform != p_model.transform 
-                    && Vector3.Distance(l_transform.position, l_transform.position) < p_model.GetData().CohesionRadius)
+                var l_neighTransform = l_allNeighbors[i].transform;
+                if (l_neighTransform != p_model.transform 
+                    && Vector3.Distance(l_neighTransform.position, p_model.transform.position) < p_model.GetData().CohesionRadius)
                 {
-                    l_targetPoint += l_transform.position;
+                    l_targetPoint += l_neighTransform.position;
                     count++;
                 } 
             }
