@@ -29,25 +29,29 @@ namespace _Main.Scripts.Boids
 
         private void OnGUI()
         {
-            GenerateConcaveCone();
+            Generate3dFovView();
         }
 
-        void GenerateConcaveCone()
+        void Generate3dFovView()
         {
             m_meshFilter.mesh = m_visionConeMesh;
 
             // Vertices
             Vector3[] vertices = new Vector3[(visionConeResolution + 1) * 2 + 1];
             float angleIncrement = (m_data.ViewAngle * 2) / visionConeResolution;
+
+            var centerPos = transform.position + transform.forward * m_data.ViewRange;
             for (int i = 0; i <= visionConeResolution; i++)
             {
                 float angle = Mathf.Deg2Rad * angleIncrement * i;
-                float x = Mathf.Cos(angle) * m_data.ViewRange * 2;
-                float z = Mathf.Sin(angle) * m_data.ViewRange * 2;
-                vertices[i] = new Vector3(x, transform.position.y - 5, z);
-                vertices[i + visionConeResolution + 1] = new Vector3(x, 5, z );
+                var centerOffset = Mathf.Deg2Rad * (90f - m_data.ViewAngle/2);
+                float x = Mathf.Cos(angle + centerOffset) * m_data.ViewRange * 2;
+                float z = Mathf.Sin(angle + centerOffset) * m_data.ViewRange * 2;
+                
+                vertices[i] = new Vector3(x, -3, z);
+                vertices[i + visionConeResolution + 1] = new Vector3(x,  + 3, z );
             }
-            vertices[vertices.Length - 1] = new Vector3(transform.position.x, transform.position.y,transform.position.z);
+            vertices[vertices.Length - 1] = transform.position;
 
             // Triangles
             int[] triangles = new int[visionConeResolution * 6];
