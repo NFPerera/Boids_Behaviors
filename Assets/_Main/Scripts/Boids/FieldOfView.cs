@@ -15,7 +15,6 @@ namespace _Main.Scripts.Boids
         private Mesh m_visionConeMesh;
         private MeshFilter m_meshFilter;
         private BoidData m_data;
-        [SerializeField] private float apexOffset;
 
 
         //Create all of these variables, most of them are self explanatory, but for the ones that aren't i've added a comment to clue you in on what they do
@@ -39,16 +38,16 @@ namespace _Main.Scripts.Boids
 
             // Vertices
             Vector3[] vertices = new Vector3[(visionConeResolution + 1) * 2 + 1];
-            float angleIncrement = 360f / visionConeResolution;
+            float angleIncrement = (m_data.ViewAngle * 2) / visionConeResolution;
             for (int i = 0; i <= visionConeResolution; i++)
             {
                 float angle = Mathf.Deg2Rad * angleIncrement * i;
-                float x = Mathf.Cos(angle) * m_data.ViewAngle;
-                float z = Mathf.Sin(angle) * m_data.ViewAngle;
-                vertices[i] = new Vector3(x + transform.position.x, transform.position.y, z + transform.position.z);
-                vertices[i + visionConeResolution + 1] = new Vector3(x * apexOffset + transform.position.x, m_data.ViewRange + transform.position.y, z * apexOffset + transform.position.z);
+                float x = Mathf.Cos(angle) * m_data.ViewRange * 2;
+                float z = Mathf.Sin(angle) * m_data.ViewRange * 2;
+                vertices[i] = new Vector3(x, transform.position.y - 5, z);
+                vertices[i + visionConeResolution + 1] = new Vector3(x, 5, z );
             }
-            vertices[vertices.Length - 1] = new Vector3(transform.position.x, m_data.ViewRange + transform.position.y, transform.position.z);
+            vertices[vertices.Length - 1] = new Vector3(transform.position.x, transform.position.y,transform.position.z);
 
             // Triangles
             int[] triangles = new int[visionConeResolution * 6];
