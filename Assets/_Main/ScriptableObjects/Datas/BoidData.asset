@@ -18,7 +18,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 264d443fc56ca3b4aa20aca88d3d3224, type: 2}
   <TurningSpeed>k__BackingField: 0.1
   <MovementSpeed>k__BackingField: 0.2
-  <ViewRange>k__BackingField: 100.4
+  <ViewRange>k__BackingField: 10
   <ViewAngle>k__BackingField: 8.7
   <AlignmentRadius>k__BackingField: 5
   <CohesionRadius>k__BackingField: 5

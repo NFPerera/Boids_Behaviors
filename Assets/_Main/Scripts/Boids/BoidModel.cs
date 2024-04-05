@@ -18,6 +18,7 @@ namespace _Main.Scripts.Boids
         
         
         private BoidController m_controller;
+        private BoidView m_view;
         private Rigidbody m_rigidbody;
         private bool m_2dMovement;
         public Vector3 WantedDir { get; private set; }
@@ -25,6 +26,7 @@ namespace _Main.Scripts.Boids
         private void Awake()
         {
             m_controller = GetComponent<BoidController>();
+            m_view = GetComponent<BoidView>();
             m_rigidbody = GetComponent<Rigidbody>();
         }
 
@@ -57,9 +59,6 @@ namespace _Main.Scripts.Boids
             transform.LookAt(transform.position + lerp_dir);
         }
 
-        //public void ChangeSteeringBehaviour(SteeringsId p_id) =>
-          //  m_controller.SetSteeringBh(BoidsManager.Singleton.GetSteeringDataStateById(p_id));
-
         public void ConstrainTo2D()
         {
             m_2dMovement = true;
@@ -79,6 +78,16 @@ namespace _Main.Scripts.Boids
         public List<BoidModel> GetNeighbors() => m_allNeighbors;
 
         private List<BoidModel> m_allNeighbors = new List<BoidModel>();
+
+        public void GetSelected()
+        {
+            m_view.ChangeToSelectedMode();
+        }
+
+        public void GetUnselected()
+        {
+            m_view.ChangeToUnselectedMode();
+        }
         private void OnTriggerEnter(Collider other)
         {
             if(other.TryGetComponent(out BoidModel l_model))

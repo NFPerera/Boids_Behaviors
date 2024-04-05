@@ -80,6 +80,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b956cd8b74c4d5bbaeeb7bfba558124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedView: {fileID: 8515171994388266511}
+  unselectedView: {fileID: 382426660472116641}
   fovOffset: {fileID: 8237883357679745925}
   visionConeMaterial: {fileID: 2100000, guid: e16641c3c323ddf4e99156830f645513, type: 2}
   visionConeResolution: 15
@@ -328,6 +330,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4094337610034504562, guid: 1f2929dba40ef05418ec80be8be13658, type: 3}
   m_PrefabInstance: {fileID: 4120211883974270142}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8515171994388266511 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5694266475649229489, guid: 1f2929dba40ef05418ec80be8be13658, type: 3}
+  m_PrefabInstance: {fileID: 4120211883974270142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8883553130197972203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -413,6 +420,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e85e393ee153a94e8d643fbe187c644, type: 3}
+--- !u!1 &382426660472116641 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9080980353637032266, guid: 0e85e393ee153a94e8d643fbe187c644, type: 3}
+  m_PrefabInstance: {fileID: 8883553130197972203}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3753439499758697806 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5719111757386680741, guid: 0e85e393ee153a94e8d643fbe187c644, type: 3}
