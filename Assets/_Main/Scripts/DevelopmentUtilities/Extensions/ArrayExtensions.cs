@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Main.Scripts.DevelopmentUtilities
+namespace _Main.Scripts.DevelopmentUtilities.Extensions
 {
     public static class ArrayExtensions
     {

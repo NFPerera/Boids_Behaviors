@@ -4,12 +4,14 @@ using UnityEngine;
 
 namespace _Main.Scripts.Boids
 {
-    [CreateAssetMenu(fileName = "BoidData", menuName = "main/BoidData", order = 0)]
-    public class BoidData : ScriptableObject
+    [CreateAssetMenu(fileName = "BoidsData", menuName = "main/BoidsData", order = 0)]
+    public class BoidsData : ScriptableObject
     {
         [field : SerializeField] public List<SteeringDataState> SteeringBehaviours { get; private set; } 
         [field : SerializeField] public float TurningSpeed { get; private set; } 
         [field : SerializeField] public float MovementSpeed { get; private set; } 
+        [field : SerializeField] public float AccelerationRate { get; private set; } 
+        [field : SerializeField] public float TerminalVelocity { get; private set; } 
         [field : SerializeField] public float ViewRange { get; private set; } 
         [field : SerializeField] public float ViewAngle { get; private set; } 
         [field : SerializeField] public float AlignmentRadius { get; private set; } 

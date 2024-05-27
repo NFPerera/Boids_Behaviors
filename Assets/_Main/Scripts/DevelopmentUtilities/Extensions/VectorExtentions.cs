@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Main.Scripts.DevelopmentUtilities
+namespace _Main.Scripts.DevelopmentUtilities.Extensions
 {
     public static class VectorExtentions
     {
@@ -20,7 +20,7 @@ namespace _Main.Scripts.DevelopmentUtilities
         public static Vector3 X0Z(this Vector2 p_v) => new(p_v.x, 0, p_v.y);
         
         /// <summary> Rotates a Vector2 by x angle  </summary>
-        public static Vector3 RotateVector2(this Vector2 v, float delta)
+        public static Vector3 RotateVector2(this Vector3 v, float delta)
         {
             delta *= Mathf.Deg2Rad;
             return new(
@@ -28,7 +28,16 @@ namespace _Main.Scripts.DevelopmentUtilities
                 v.x * Mathf.Sin(delta) + v.y * Mathf.Cos(delta)
             );
         }
-
+        
+        public static Vector2 RotateVector2(this Vector2 v, float delta)
+        {
+            delta *= Mathf.Deg2Rad;
+            return new(
+                v.x * Mathf.Cos(delta) - v.y * Mathf.Sin(delta),
+                v.x * Mathf.Sin(delta) + v.y * Mathf.Cos(delta)
+            );
+        }
+        
         public static Vector2 GetRandomRangeVector2(Vector2 minRange, Vector2 maxRange)
         {
             return new Vector2(Random.Range(minRange.x, maxRange.x), Random.Range(minRange.y, maxRange.y));
@@ -40,6 +49,8 @@ namespace _Main.Scripts.DevelopmentUtilities
         }
         
         public static Vector2 GetRandomDirVector2() => Random.insideUnitCircle.normalized;
+        
+
         #endregion
 
         #region Vector3
@@ -88,7 +99,7 @@ namespace _Main.Scripts.DevelopmentUtilities
             var l_perpendicularVector = Vector3.Cross(p_v, p_fixedVector);
             return l_perpendicularVector;
         }
-
+        
         public static Vector3 GetDeviatedVectorWithFixedPlane(this Vector3 p_v, Vector3 p_fixedVector, float p_multiplier)
         {
             return ((GetCrossProductWithFixedPlane(p_v, p_fixedVector) * p_multiplier + p_v)).normalized;
@@ -119,7 +130,6 @@ namespace _Main.Scripts.DevelopmentUtilities
             return new Vector3(Random.Range(minRange.x, maxRange.x), Random.Range(minRange.y, maxRange.y), Random.Range(minRange.z, maxRange.z) );
         }
 
-        
         #endregion
 
         #region Vector4

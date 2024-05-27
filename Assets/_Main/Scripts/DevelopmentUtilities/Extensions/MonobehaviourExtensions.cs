@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace _Main.Scripts.DevelopmentUtilities
+namespace _Main.Scripts.DevelopmentUtilities.Extensions
 {
     public static class MonobehaviourExtensions
     {
@@ -16,5 +16,7 @@ namespace _Main.Scripts.DevelopmentUtilities
             yield return new WaitForEndOfFrame();
             p_action?.Invoke();
         }
+        
+        
     }
 }

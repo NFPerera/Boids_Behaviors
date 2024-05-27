@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace _Main.Scripts.DevelopmentUtilities
+namespace _Main.Scripts.DevelopmentUtilities.Extensions
 {
     public class RouletteWheel<T>
     {
@@ -24,6 +24,7 @@ namespace _Main.Scripts.DevelopmentUtilities
         private float m_cachedSum;
 
 
+        public bool IsEmpty() => m_cachedDictionary.Count <= 0;
         public static TY Run<TY>(Dictionary<TY, float> p_items)
         {
             float l_max = 0;
@@ -47,6 +48,28 @@ namespace _Main.Scripts.DevelopmentUtilities
             return default;
         }
 
+        public static TY Run<TY>(List<TY> items, List<float> weights)
+        {
+            float maxWeight = 0;
+
+            foreach (var weight in weights)
+            {
+                maxWeight += weight;
+            }
+
+            var randomValue = UnityEngine.Random.Range(0, maxWeight);
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                randomValue -= weights[i];
+                if (randomValue <= 0)
+                {
+                    return items[i];
+                }
+            }
+
+            return default;
+        }
         
         public void SetCachedDictionary(Dictionary<T, float> p_itemsToCache)
         {

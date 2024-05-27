@@ -3,8 +3,8 @@ using UnityEngine.Serialization;
 
 namespace _Main.Scripts.SteeringData
 {
-    [CreateAssetMenu(fileName = "BoidManagerData", menuName = "main/BoidManagerData", order = 0)]
-    public class BoidManagerData : ScriptableObject
+    [CreateAssetMenu(fileName = "BoidsManagerData", menuName = "main/BoidsManagerData", order = 0)]
+    public class BoidsManagerData : ScriptableObject
     {
         [field: SerializeField] public SteeringDataState ObstacleAvoidanceState{ get; private set;}
         [field: SerializeField] public SteeringDataState AlignmentState{ get; private set;}

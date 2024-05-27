@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Main.Scripts.DevelopmentUtilities
+namespace _Main.Scripts.DevelopmentUtilities.Extensions
 {
     public class PoolGeneric<T> where T : Object
     {
@@ -21,6 +21,12 @@ namespace _Main.Scripts.DevelopmentUtilities
             if (m_availables.Count > 0)
             {
                 var l_obj = m_availables.Dequeue();
+                while (l_obj == default &&  m_availables.Count > 0)
+                {
+                    l_obj = m_availables.Dequeue();
+                }
+                if (l_obj == default)
+                    l_obj = Object.Instantiate(m_prefab, m_parent);
                 m_inUse.Add(l_obj);
                 return l_obj;
             }

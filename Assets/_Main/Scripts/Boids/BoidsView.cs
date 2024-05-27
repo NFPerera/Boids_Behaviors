@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Main.Scripts.Boids
 {
     [RequireComponent(typeof(MeshRenderer))]
     [RequireComponent(typeof(MeshFilter))]
-    public class BoidView : MonoBehaviour
+    public class BoidsView : MonoBehaviour
     {
         [SerializeField] private GameObject selectedView;
         [SerializeField] private GameObject unselectedView;
@@ -20,13 +16,13 @@ namespace _Main.Scripts.Boids
         
         private Mesh m_visionConeMesh;
         private MeshFilter m_meshFilter;
-        private BoidModel m_model;
-        private BoidData m_data;
+        private BoidsesModel m_model;
+        private BoidsData m_data;
         private bool m_isBoidSelected;
 
         private void Awake()
         {
-            m_model = GetComponent<BoidModel>();
+            m_model = GetComponent<BoidsesModel>();
         }
 
         
