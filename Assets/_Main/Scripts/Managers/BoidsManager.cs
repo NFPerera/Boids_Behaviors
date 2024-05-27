@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using _Main.Scripts.Boids;
-using _Main.Scripts.DevelopmentUtilities;
-using _Main.Scripts.Steering_Behaviours;
+using _Main.Scripts.DevelopmentUtilities.Extensions;
 using _Main.Scripts.SteeringData;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -11,9 +9,9 @@ namespace _Main.Scripts.Managers
 {
     public class BoidsManager : MonoBehaviour
     {
-        [SerializeField] private BoidManagerData data;
-        [SerializeField] private BoidData boidData;
-        [SerializeField] private BoidModel boidPrefab;
+        [SerializeField] private BoidsManagerData data;
+        [SerializeField] private BoidsData boidsData;
+        [SerializeField] private BoidsesModel boidsPrefab;
         [SerializeField] private bool is2D;
         [SerializeField] private Vector3 spawnCenter;
         [SerializeField] private Vector3 spawnAreaHalfExtent;
@@ -23,8 +21,8 @@ namespace _Main.Scripts.Managers
         
         private Bounds m_arenaBounds;
 
-        private Dictionary<SteeringsId, SteeringDataState> m_allSteeringDataStates = new Dictionary<SteeringsId, SteeringDataState>();
-        private List<BoidModel> m_allBoids = new List<BoidModel>();
+        private readonly Dictionary<SteeringsId, SteeringDataState> m_allSteeringDataStates = new Dictionary<SteeringsId, SteeringDataState>();
+        private readonly List<BoidsesModel> m_allBoids = new List<BoidsesModel>();
         private void Awake()
         {
             if (Singleton != default)
@@ -49,40 +47,20 @@ namespace _Main.Scripts.Managers
             SpawnBoids(boidsToSpawn);
         }
 
-        private void Update()
+        public void CheckForBounds(BoidsesModel p_model)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                ChangeAllBoidsSteeringBh(SteeringsId.Line);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                ChangeAllBoidsSteeringBh(SteeringsId.ObstacleAvoidance);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                ChangeAllBoidsSteeringBh(SteeringsId.Alignment);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                ChangeAllBoidsSteeringBh(SteeringsId.Cohesion);
-            }
-        }
-
-        public void CheckForBounds(BoidModel p_model)
-        {
-            var boidPos = p_model.gameObject.transform.position;
-            if(m_arenaBounds.Contains(boidPos))
+            var l_boidPos = p_model.gameObject.transform.position;
+            if(m_arenaBounds.Contains(l_boidPos))
                 return;
 
-            p_model.gameObject.transform.position = -m_arenaBounds.ClosestPoint(boidPos);
+            p_model.gameObject.transform.position = -m_arenaBounds.ClosestPoint(l_boidPos);
         }
 
         private void SpawnBoids(int p_boidsToSpawn)
         {
-            for (int i = 0; i < p_boidsToSpawn; i++)
+            for (int l_i = 0; l_i < p_boidsToSpawn; l_i++)
             {
-                var l_boid = Instantiate(boidPrefab);
+                var l_boid = Instantiate(boidsPrefab);
                 Vector3 l_rndSpawnPoint;
                 Vector3 l_rndDir;
                 if (is2D)
@@ -99,30 +77,21 @@ namespace _Main.Scripts.Managers
                 }
                 
                 
-                l_boid.Initialize(spawnCenter + l_rndSpawnPoint, l_rndDir, SteeringsId.Line);
+                l_boid.Initialize(spawnCenter + l_rndSpawnPoint, l_rndDir);
                 
                 m_allBoids.Add(l_boid);
             }   
         }
 
-        public void ChangeAllBoidsSteeringBh(SteeringsId p_id)
-        {
-            for (int i = 0; i < m_allBoids.Count; i++)
-            {
-                //m_allBoids[i].ChangeSteeringBehaviour(p_id);
-            }
-        }
-        public SteeringDataState GetSteeringDataStateById(SteeringsId p_id) => m_allSteeringDataStates[p_id];
-
-        public void SetBoidsSpeed(float p_f) => boidData.SetMovementSpeed(p_f);
-        public void SetBoidViewRange(float p_f) => boidData.SetViewRange(p_f);
-        public void SetBoidViewAngle(float p_f) => boidData.SetViewAngle(p_f);
+        public void SetBoidsSpeed(float p_f) => boidsData.SetMovementSpeed(p_f);
+        public void SetBoidsViewRange(float p_f) => boidsData.SetViewRange(p_f);
+        public void SetBoidsViewAngle(float p_f) => boidsData.SetViewAngle(p_f);
         
-        public void SetBoidObsAvoid(float p_f) => boidData.SetObsAvoidanceWeight(p_f);
-        public void SetBoidCohesion(float p_f) => boidData.SetCohesionWeight(p_f);
-        public void SetBoidAlignment(float p_f) => boidData.SetAlignmentWeight(p_f);
-        public void SetBoidAlignmentRadius(float p_f) => boidData.SetAlignmentRadius(p_f);
-        public void SetBoidCohesionRadius(float p_f) => boidData.SetCohesionRadius(p_f);
+        public void SetBoidsObsAvoid(float p_f) => boidsData.SetObsAvoidanceWeight(p_f);
+        public void SetBoidsCohesion(float p_f) => boidsData.SetCohesionWeight(p_f);
+        public void SetBoidsAlignment(float p_f) => boidsData.SetAlignmentWeight(p_f);
+        public void SetBoidsAlignmentRadius(float p_f) => boidsData.SetAlignmentRadius(p_f);
+        public void SetBoidsCohesionRadius(float p_f) => boidsData.SetCohesionRadius(p_f);
         
         
 #if UNITY_EDITOR

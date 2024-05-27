@@ -1,5 +1,4 @@
-﻿using System;
-using _Main.Scripts.Boids;
+﻿using _Main.Scripts.Boids;
 using _Main.Scripts.DevelopmentUtilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,7 +11,7 @@ namespace _Main.Scripts.Managers
         private Camera m_camera;
 
 
-        private BoidModel m_previousSelectedModel;
+        private BoidsesModel m_previousSelectedModel;
         private void Start()
         {
             m_camera = Camera.main;
@@ -21,21 +20,21 @@ namespace _Main.Scripts.Managers
 
         private void SubscribeInputs()
         {
-            var manager = MyInputManager.Instance;
+            var l_manager = MyInputManager.Instance;
             
-            manager.SubscribeInput("LeftClick", OnLeftClickPerformed);
+            l_manager.SubscribeInput("LeftClick", OnLeftClickPerformed);
         }
 
         private void OnLeftClickPerformed(InputAction.CallbackContext p_context)
         {
             Debug.Log("Click");
 
-            var ray = m_camera.ScreenPointToRay(Input.mousePosition);
+            var l_ray = m_camera.ScreenPointToRay(Input.mousePosition);
 
-            if (!Physics.Raycast(ray, out RaycastHit l_hit, 300f, boidMask))
+            if (!Physics.Raycast(l_ray, out RaycastHit l_hit, 300f, boidMask))
                 return;
             
-            if(!l_hit.transform.TryGetComponent(out BoidModel l_boidModel))
+            if(!l_hit.transform.TryGetComponent(out BoidsesModel l_boidModel))
                 return;
             
             if(l_boidModel == m_previousSelectedModel)

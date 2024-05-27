@@ -7,7 +7,7 @@ namespace _Main.Scripts.Steering_Behaviours
     [CreateAssetMenu(fileName = "AlignmentState", menuName = "main/SteeringsBh/AlignmentState", order = 0)]
     public class AlignmentState : SteeringDataState
     {
-        public override Vector3 GetDir(BoidModel p_model)
+        public override Vector3 GetDir(BoidsesModel p_model)
         {
             var l_averageAlignmentDirection = Vector3.zero;
 

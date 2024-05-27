@@ -29,39 +29,39 @@ namespace _Main.Scripts.Managers
         
         public void SetBoidViewRange(float p_f)
         {
-            BoidsManager.Singleton.SetBoidViewRange(p_f);
+            BoidsManager.Singleton.SetBoidsViewRange(p_f);
             viewRangeTxt.text = p_f.ToString();
         }
         
         public void SetBoidViewAngle(float p_f)
         {
-            BoidsManager.Singleton.SetBoidViewAngle(p_f);
+            BoidsManager.Singleton.SetBoidsViewAngle(p_f);
             viewAngleTxt.text = p_f.ToString();
         }
         
         public void SetBoidObsAvoid(float p_f)
         {
-            BoidsManager.Singleton.SetBoidObsAvoid(p_f);
+            BoidsManager.Singleton.SetBoidsObsAvoid(p_f);
             obsAvoidTxt.text = p_f.ToString();
         }
         public void SetBoidCohesion(float p_f)
         {
-            BoidsManager.Singleton.SetBoidCohesion(p_f);
+            BoidsManager.Singleton.SetBoidsCohesion(p_f);
             cohesionTxt.text = p_f.ToString();
         }
         public void SetBoidAlignment(float p_f)
         {
-            BoidsManager.Singleton.SetBoidAlignment(p_f);
+            BoidsManager.Singleton.SetBoidsAlignment(p_f);
             alignmentTxt.text = p_f.ToString();
         }
         public void SetBoidAlignmentRadius(float p_f)
         {
-            BoidsManager.Singleton.SetBoidAlignmentRadius(p_f);
+            BoidsManager.Singleton.SetBoidsAlignmentRadius(p_f);
             alignmentRadiusTxt.text = p_f.ToString();
         }
         public void SetBoidCohesionRadius(float p_f)
         {
-            BoidsManager.Singleton.SetBoidCohesionRadius(p_f);
+            BoidsManager.Singleton.SetBoidsCohesionRadius(p_f);
             cohesionRadiusTxt.text = p_f.ToString();
         }
         
