@@ -21,10 +21,14 @@ namespace _Main.Scripts.Managers
         [SerializeField] private TMP_Text speedTxt;
         [SerializeField] private TMP_Text viewRangeTxt;
         [SerializeField] private TMP_Text viewAngleTxt;
+        [Header("Stats Obj")] 
+        [SerializeField] private GameObject behavioursObj;
+        [SerializeField] private GameObject dataObj;
 
-
+        private bool m_isUiHidden;
         private void Start()
         {
+            m_isUiHidden = false;
             RefreshAllUi();
         }
 
@@ -85,12 +89,35 @@ namespace _Main.Scripts.Managers
             alignmentRadiusTxt.text = l_data.CurrBoidsStats[BoidsStatsIds.AlignmentRadius].ToString();
             cohesionRadiusTxt.text = l_data.CurrBoidsStats[BoidsStatsIds.CohesionRadius].ToString();
         }
-        public void ToggleUi()
+
+        
+        public void ToggleAllUi()
         {
-            foreach (var obj in allUiElements)
+            if (!m_isUiHidden)
             {
-                obj.SetActive(!obj.activeSelf);
+                foreach (var l_obj in allUiElements)
+                {
+                    l_obj.SetActive(false);
+                }
+
+                m_isUiHidden = true;
             }
+            else
+            {
+                foreach (var l_obj in allUiElements)
+                {
+                    l_obj.SetActive(true);
+                }
+                
+                dataObj.SetActive(false);
+                m_isUiHidden = false;
+            }
+        }
+
+        public void ToggleStatsDataUi()
+        {
+            behavioursObj.SetActive(!behavioursObj.activeSelf);
+            dataObj.SetActive(!dataObj.activeSelf);
         }
         
         

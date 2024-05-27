@@ -1368,7 +1368,7 @@ GameObject:
   - component: {fileID: 265694609}
   - component: {fileID: 265694608}
   m_Layer: 5
-  m_Name: ChangeMenu
+  m_Name: ChangeMenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1440,7 +1440,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 874938857}
         m_TargetAssemblyTypeName: _Main.Scripts.Managers.UiManager, Assembly-CSharp
-        m_MethodName: ToggleUi
+        m_MethodName: ToggleStatsDataUi
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4603,6 +4603,7 @@ MonoBehaviour:
   allUiElements:
   - {fileID: 289311361}
   - {fileID: 1333552733}
+  - {fileID: 265694606}
   obsAvoidTxt: {fileID: 1421893948}
   cohesionTxt: {fileID: 1677456770}
   alignmentTxt: {fileID: 371934124}
@@ -4611,6 +4612,8 @@ MonoBehaviour:
   speedTxt: {fileID: 464453261}
   viewRangeTxt: {fileID: 755639302}
   viewAngleTxt: {fileID: 320629899}
+  behavioursObj: {fileID: 289311361}
+  dataObj: {fileID: 1333552733}
 --- !u!4 &874938858
 Transform:
   m_ObjectHideFlags: 0
@@ -6435,7 +6438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1333552734
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6455,7 +6458,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -234, y: -113.99994}
+  m_AnchoredPosition: {x: -580, y: -113.99994}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1348684417
@@ -7993,7 +7996,7 @@ MonoBehaviour:
   is2D: 0
   spawnCenter: {x: 0, y: 0, z: 0}
   spawnAreaHalfExtent: {x: 30, y: 30, z: 30}
-  boidsToSpawn: 1
+  boidsToSpawn: 20
 --- !u!4 &1641136868
 Transform:
   m_ObjectHideFlags: 0
@@ -8743,7 +8746,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 874938857}
         m_TargetAssemblyTypeName: _Main.Scripts.Managers.UiManager, Assembly-CSharp
-        m_MethodName: ToggleUi
+        m_MethodName: ToggleAllUi
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
