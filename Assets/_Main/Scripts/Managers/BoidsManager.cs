@@ -41,8 +41,6 @@ namespace _Main.Scripts.Managers
             m_allSteeringDataStates.Add(SteeringsId.ObstacleAvoidance, data.ObstacleAvoidanceState);
             m_allSteeringDataStates.Add(SteeringsId.Cohesion, data.CohesionState);
             m_allSteeringDataStates.Add(SteeringsId.Alignment, data.AlignmentState);
-            
-            boidsData.ResetCurrBoidsStats();
         }
 
         private void Start()
@@ -108,6 +106,8 @@ namespace _Main.Scripts.Managers
         }
 
         public BoidsData GetBoidsData() => boidsData;
+        
+        
         
         
 #if UNITY_EDITOR

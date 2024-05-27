@@ -1,5 +1,8 @@
-﻿namespace _Main.Scripts.Enum
+﻿using System;
+
+namespace _Main.Scripts.Enum
 {
+    [Serializable]
     public enum BoidsStatsIds
     {
         TurningSpeed,

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using _Main.Scripts.Enum;
+using UnityEngine;
 
 namespace _Main.Scripts.Boids
 {
@@ -64,17 +65,17 @@ namespace _Main.Scripts.Boids
 
             // Vertices
             Vector3[] l_vertices = new Vector3[(visionConeResolution + 1) * 2 + 1];
-            float l_angleIncrement = (m_data.ViewAngle * 2) / visionConeResolution;
+            float l_angleIncrement = (m_data.GetStatById(BoidsStatsIds.ViewAngle) * 2) / visionConeResolution;
 
             for (int i = 0; i <= visionConeResolution; i++)
             {
                 float l_angleRad = Mathf.Deg2Rad * l_angleIncrement * i;
                 
                 
-                var l_centerOffset = Mathf.Deg2Rad * (90f - m_data.ViewAngle/2);
+                var l_centerOffset = Mathf.Deg2Rad * (90f - m_data.GetStatById(BoidsStatsIds.ViewAngle)/2);
                 
-                float l_x = Mathf.Cos(l_angleRad + l_centerOffset) * m_data.ViewRange * 2;
-                float l_z = Mathf.Sin(l_angleRad + l_centerOffset) * m_data.ViewRange * 2;
+                float l_x = Mathf.Cos(l_angleRad + l_centerOffset) * m_data.GetStatById(BoidsStatsIds.ViewRange) * 2;
+                float l_z = Mathf.Sin(l_angleRad + l_centerOffset) * m_data.GetStatById(BoidsStatsIds.ViewRange) * 2;
                 
                 l_vertices[i] = new Vector3(l_x, -visionConeHeight, l_z);
                 l_vertices[i + visionConeResolution + 1] = new Vector3(l_x,  + visionConeHeight, l_z );
@@ -189,8 +190,8 @@ namespace _Main.Scripts.Boids
             int[] l_triangles = new int[(visionConeResolution - 1) * 3];
             Vector3[] l_vertices = new Vector3[visionConeResolution + 1];
             l_vertices[0] = Vector3.zero;
-            float l_currentAngle = - (m_data.ViewAngle * Mathf.Deg2Rad)  / 2;
-            float l_angleIcrement = (m_data.ViewAngle * Mathf.Deg2Rad) / (visionConeResolution - 1);
+            float l_currentAngle = - (m_data.GetStatById(BoidsStatsIds.ViewAngle) * Mathf.Deg2Rad)  / 2;
+            float l_angleIcrement = (m_data.GetStatById(BoidsStatsIds.ViewAngle) * Mathf.Deg2Rad) / (visionConeResolution - 1);
 
             for (int l_i = 0; l_i < visionConeResolution; l_i++)
             {
@@ -198,14 +199,14 @@ namespace _Main.Scripts.Boids
                 var l_cosine = Mathf.Cos(l_currentAngle);
                 Vector3 l_raycastDirection = (fovOffset.forward * l_cosine) + (fovOffset.right * l_sine);
                 Vector3 l_vertForward = (Vector3.forward * l_cosine) + (Vector3.right * l_sine);
-                if (Physics.Raycast(fovOffset.position, l_raycastDirection, out RaycastHit l_hit, m_data.ViewRange,
+                if (Physics.Raycast(fovOffset.position, l_raycastDirection, out RaycastHit l_hit, m_data.GetStatById(BoidsStatsIds.ViewRange),
                         m_data.ObstacleMask))
                 {
                     l_vertices[l_i + 1] = l_vertForward * l_hit.distance;
                 }
                 else
                 {
-                    l_vertices[l_i + 1] = l_vertForward * m_data.ViewRange;
+                    l_vertices[l_i + 1] = l_vertForward * m_data.GetStatById(BoidsStatsIds.ViewRange);
                 }
 
 
@@ -236,7 +237,7 @@ namespace _Main.Scripts.Boids
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, m_data.ViewRange);
+            Gizmos.DrawWireSphere(transform.position, m_data.GetStatById(BoidsStatsIds.ViewRange));
             Gizmos.DrawLine(transform.position, transform.position + m_model.WantedDir*5);
             Gizmos.color = Color.cyan;
             Gizmos.DrawLine(transform.position, transform.position + transform.forward*5);

@@ -19,6 +19,20 @@ MonoBehaviour:
   <BaseBoidsStats>k__BackingField:
     m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
     m_values:
+    - 0.1
+    - 1
+    - 0.1
+    - 1
+    - 1
+    - 10
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+  <CurrBoidsStats>k__BackingField:
+    m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+    m_values:
     - 0.3
     - 6
     - 0.5
@@ -29,21 +43,21 @@ MonoBehaviour:
     - 2
     - 20
     - 10
-    - 1
-  <CurrBoidsStats>k__BackingField:
-    m_keys: 
-    m_values: []
-  <TurningSpeed>k__BackingField: 0.3
-  <MovementSpeed>k__BackingField: 10.83991
-  <AccelerationRate>k__BackingField: 0.5
-  <TerminalVelocity>k__BackingField: 6
-  <ViewRange>k__BackingField: 10.808487
-  <ViewAngle>k__BackingField: 202
-  <AlignmentRadius>k__BackingField: 5
-  <CohesionRadius>k__BackingField: 2
+    - 8
+  <MaxBoidsStats>k__BackingField:
+    m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+    m_values:
+    - 100
+    - 100
+    - 100
+    - 100
+    - 100
+    - 360
+    - 100
+    - 100
+    - 100
+    - 100
+    - 100
   <ObstacleMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 256
-  <ObsAvoidanceWeight>k__BackingField: 20
-  <AlignmentWeight>k__BackingField: 10
-  <CohesionWeight>k__BackingField: 1
