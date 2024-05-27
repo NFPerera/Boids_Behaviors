@@ -1,4 +1,5 @@
 ﻿using _Main.Scripts.Boids;
+using _Main.Scripts.Enum;
 using _Main.Scripts.SteeringData;
 using UnityEngine;
 
@@ -7,17 +8,19 @@ namespace _Main.Scripts.Steering_Behaviours
     [CreateAssetMenu(fileName = "AlignmentState", menuName = "main/SteeringsBh/AlignmentState", order = 0)]
     public class AlignmentState : SteeringDataState
     {
-        public override Vector3 GetDir(BoidsesModel p_model)
+        public override Vector3 GetDir(BoidsModel p_model)
         {
             var l_averageAlignmentDirection = Vector3.zero;
 
             int l_count = 0;
             var l_allNeighbors = p_model.GetNeighbors();
+            var l_data = p_model.GetData();
+            
             for (int i = 0; i < l_allNeighbors.Count; i++)
             {
                 var l_neighTransform = l_allNeighbors[i].transform;
                 if ((l_neighTransform != p_model.transform)
-                    && Vector3.Distance(l_neighTransform.position, p_model.transform.position) < p_model.GetData().AlignmentRadius)
+                    && Vector3.Distance(l_neighTransform.position, p_model.transform.position) < l_data.GetStatById(BoidsStatsIds.AlignmentRadius))
                 {
                     l_averageAlignmentDirection += l_neighTransform.forward;
                     l_count++;
@@ -29,7 +32,7 @@ namespace _Main.Scripts.Steering_Behaviours
                 l_averageAlignmentDirection /= l_count;
                 l_averageAlignmentDirection.Normalize();
             }
-            return l_averageAlignmentDirection * p_model.GetData().AlignmentWeight;
+            return l_averageAlignmentDirection * l_data.GetStatById(BoidsStatsIds.AlignmentWeight);
         }
     }
 }

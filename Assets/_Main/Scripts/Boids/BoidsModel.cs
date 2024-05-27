@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Main.Scripts.DevelopmentUtilities.Extensions;
+using _Main.Scripts.Enum;
 using _Main.Scripts.Managers;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace _Main.Scripts.Boids
 {
     [RequireComponent(typeof(BoidsController))]
     [RequireComponent(typeof(BoidsView))]
-    public class BoidsesModel : MonoBehaviour, IBoids
+    public class BoidsModel : MonoBehaviour, IBoids
     {
         [SerializeField] private BoidsData data;
         
@@ -50,7 +51,7 @@ namespace _Main.Scripts.Boids
                 WantedDir = WantedDir.Xyo();
             }
 
-            var l_lerpDir = Vector3.Lerp(transform.forward, WantedDir, data.TurningSpeed * Time.deltaTime);
+            var l_lerpDir = Vector3.Lerp(transform.forward, WantedDir, data.GetStatById(BoidsStatsIds.TurningSpeed) * Time.deltaTime);
             
             transform.position += l_lerpDir.normalized * (p_speed * Time.deltaTime);
             transform.LookAt(transform.position + l_lerpDir);
@@ -60,27 +61,28 @@ namespace _Main.Scripts.Boids
         {
             WantedDir = p_dir.normalized;
 
-            var l_accelerationVector = WantedDir * (data.AccelerationRate * p_accMult);
+            var l_accelerationVector = WantedDir * (data.GetStatById(BoidsStatsIds.AccelerationRate) * p_accMult);
 
             var l_velocity = m_rigidbody.velocity;
             l_velocity += l_accelerationVector * Time.deltaTime;
 
             
-            var l_lerpDir = Vector3.Lerp(transform.forward, WantedDir, data.TurningSpeed * Time.deltaTime);
+            var l_lerpDir = Vector3.Lerp(transform.forward, WantedDir, data.GetStatById(BoidsStatsIds.TurningSpeed) * Time.deltaTime);
             
             
-            m_rigidbody.velocity = Vector2.ClampMagnitude(l_velocity, data.TerminalVelocity);
+            m_rigidbody.velocity = Vector2.ClampMagnitude(l_velocity, data.GetStatById(BoidsStatsIds.TerminalSpeed));
             transform.LookAt(transform.position + l_lerpDir);
         }
 
         public float GetCurrSpeedBasedOnDistance(float p_decreasePace)
         {
-            var l_size = Physics.RaycastNonAlloc(transform.position, transform.forward, m_raycastHits, data.ViewRange, data.ObstacleMask);
+            var l_size = Physics.RaycastNonAlloc(transform.position, transform.forward, m_raycastHits, 
+                data.GetStatById(BoidsStatsIds.ViewRange), data.ObstacleMask);
             
             if (l_size < 1)
-                return data.MovementSpeed;
+                return data.GetStatById(BoidsStatsIds.MovementSpeed);
 
-            var l_closestDistanceToObs = data.ViewRange;
+            var l_closestDistanceToObs = data.GetStatById(BoidsStatsIds.ViewRange);
 
             for (int l_i = 0; l_i < l_size; l_i++)
             {
@@ -91,18 +93,19 @@ namespace _Main.Scripts.Boids
             }
             
             //return (data.TerminalVelocity)/(p_decreasePace+l_closestDistanceToObs);
-            return data.MovementSpeed / (1 + (float)Math.Pow(p_decreasePace * l_closestDistanceToObs, 2));
+            return data.GetStatById(BoidsStatsIds.MovementSpeed) / (1 + (float)Math.Pow(p_decreasePace * l_closestDistanceToObs, 2));
         }
         
         public void ConstrainTo2D()
         {
             m_2dMovement = true;
             var l_transform = transform;
-            l_transform.position = (Vector2)l_transform.position;
-            transform.Rotate(Vector3.forward, 0f);
+            l_transform.position = l_transform.position.Xyo();
+            var l_newRot =transform.rotation.eulerAngles.Xyo();
+            transform.rotation  = Quaternion.Euler(l_newRot);
+
+            m_rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionZ;
             
-            m_rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ;
-            m_rigidbody.constraints = RigidbodyConstraints.FreezeRotationY;
         }
         
         public void ConstrainTo3D()
@@ -111,9 +114,9 @@ namespace _Main.Scripts.Boids
             m_rigidbody.constraints = RigidbodyConstraints.None;
         }
 
-        public List<BoidsesModel> GetNeighbors() => m_allNeighbors;
+        public List<BoidsModel> GetNeighbors() => m_allNeighbors;
 
-        private readonly List<BoidsesModel> m_allNeighbors = new List<BoidsesModel>();
+        private readonly List<BoidsModel> m_allNeighbors = new List<BoidsModel>();
 
         public void GetSelected()
         {
@@ -126,13 +129,13 @@ namespace _Main.Scripts.Boids
         }
         private void OnTriggerEnter(Collider p_other)
         {
-            if(p_other.TryGetComponent(out BoidsesModel l_model))
+            if(p_other.TryGetComponent(out BoidsModel l_model))
                 m_allNeighbors.Add(l_model);
         }
 
         private void OnTriggerExit(Collider p_other)
         {
-            if (p_other.TryGetComponent(out BoidsesModel l_model))
+            if (p_other.TryGetComponent(out BoidsModel l_model))
             {
                 m_allNeighbors.Remove(l_model);
             }

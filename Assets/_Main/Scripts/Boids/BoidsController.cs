@@ -4,12 +4,12 @@ namespace _Main.Scripts.Boids
 {
     public class BoidsController : MonoBehaviour
     {
-        private BoidsesModel m_model;
+        private BoidsModel m_model;
         
         
         private void Start()
         {
-            m_model = GetComponent<BoidsesModel>();
+            m_model = GetComponent<BoidsModel>();
             
         }
 

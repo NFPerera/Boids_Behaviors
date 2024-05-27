@@ -16,6 +16,23 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4d06f8acf072db740b260d3a73a521f6, type: 2}
   - {fileID: 11400000, guid: 59e3060a3ee24bc4da50c58253b32008, type: 2}
   - {fileID: 11400000, guid: 264d443fc56ca3b4aa20aca88d3d3224, type: 2}
+  <BaseBoidsStats>k__BackingField:
+    m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+    m_values:
+    - 0.3
+    - 6
+    - 0.5
+    - 6
+    - 10
+    - 200
+    - 5
+    - 2
+    - 20
+    - 10
+    - 1
+  <CurrBoidsStats>k__BackingField:
+    m_keys: 
+    m_values: []
   <TurningSpeed>k__BackingField: 0.3
   <MovementSpeed>k__BackingField: 10.83991
   <AccelerationRate>k__BackingField: 0.5

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Main.Scripts.Enum;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,51 +22,49 @@ namespace _Main.Scripts.Managers
         [SerializeField] private TMP_Text viewRangeTxt;
         [SerializeField] private TMP_Text viewAngleTxt;
 
-        public void SetBoidSpeed(float p_f)
+
+        public void AddBoidsStat(BoidsStatsIds p_statsIds, float p_f)
         {
-            BoidsManager.Singleton.SetBoidsSpeed(p_f);
-            speedTxt.text = p_f.ToString();
+            
         }
-        
-        public void SetBoidViewRange(float p_f)
+        public void SetBoidsStat(BoidsStatsIds p_statsIds, float p_f)
         {
-            BoidsManager.Singleton.SetBoidsViewRange(p_f);
-            viewRangeTxt.text = p_f.ToString();
+            BoidsManager.Singleton.SetBoidsStats(p_statsIds,p_f);
+            RefreshStatUi(p_statsIds);
         }
-        
-        public void SetBoidViewAngle(float p_f)
+
+        private void RefreshStatUi(BoidsStatsIds p_statsIds)
         {
-            BoidsManager.Singleton.SetBoidsViewAngle(p_f);
-            viewAngleTxt.text = p_f.ToString();
+            var l_data = BoidsManager.Singleton.GetBoidsData();
+            switch (p_statsIds)
+            {
+                case BoidsStatsIds.MovementSpeed:
+                    speedTxt.text = l_data.CurrBoidsStats[BoidsStatsIds.MovementSpeed].ToString("F");
+                    break;
+                case BoidsStatsIds.ViewRange:
+                    viewRangeTxt.text = l_data.CurrBoidsStats[BoidsStatsIds.ViewRange].ToString("F");
+                    break;
+                case BoidsStatsIds.ViewAngle:
+                    viewAngleTxt.text = l_data.CurrBoidsStats[BoidsStatsIds.ViewAngle].ToString("F");
+                    break;
+                case BoidsStatsIds.ObsAvoidanceWeight:
+                    obsAvoidTxt.text = l_data.CurrBoidsStats[BoidsStatsIds.ObsAvoidanceWeight].ToString("F");
+                    break;
+                case BoidsStatsIds.CohesionWeight:
+                    cohesionTxt.text = l_data.CurrBoidsStats[BoidsStatsIds.CohesionWeight].ToString("F");
+                    break;
+                case BoidsStatsIds.AlignmentRadius:
+                    alignmentRadiusTxt.text = l_data.CurrBoidsStats[BoidsStatsIds.AlignmentRadius].ToString("F");
+                    break;
+                case BoidsStatsIds.AlignmentWeight:
+                    alignmentTxt.text = l_data.CurrBoidsStats[BoidsStatsIds.AlignmentWeight].ToString("F");
+                    break;
+                case BoidsStatsIds.CohesionRadius:
+                    cohesionRadiusTxt.text = l_data.CurrBoidsStats[BoidsStatsIds.CohesionRadius].ToString("F");
+                    break;
+            }
+            
         }
-        
-        public void SetBoidObsAvoid(float p_f)
-        {
-            BoidsManager.Singleton.SetBoidsObsAvoid(p_f);
-            obsAvoidTxt.text = p_f.ToString();
-        }
-        public void SetBoidCohesion(float p_f)
-        {
-            BoidsManager.Singleton.SetBoidsCohesion(p_f);
-            cohesionTxt.text = p_f.ToString();
-        }
-        public void SetBoidAlignment(float p_f)
-        {
-            BoidsManager.Singleton.SetBoidsAlignment(p_f);
-            alignmentTxt.text = p_f.ToString();
-        }
-        public void SetBoidAlignmentRadius(float p_f)
-        {
-            BoidsManager.Singleton.SetBoidsAlignmentRadius(p_f);
-            alignmentRadiusTxt.text = p_f.ToString();
-        }
-        public void SetBoidCohesionRadius(float p_f)
-        {
-            BoidsManager.Singleton.SetBoidsCohesionRadius(p_f);
-            cohesionRadiusTxt.text = p_f.ToString();
-        }
-        
-        
         public void ToggleUi()
         {
             foreach (var obj in allUiElements)

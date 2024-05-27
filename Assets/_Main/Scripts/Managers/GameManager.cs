@@ -11,7 +11,7 @@ namespace _Main.Scripts.Managers
         private Camera m_camera;
 
 
-        private BoidsesModel m_previousSelectedModel;
+        private BoidsModel m_previousSelectedModel;
         private void Start()
         {
             m_camera = Camera.main;
@@ -27,14 +27,13 @@ namespace _Main.Scripts.Managers
 
         private void OnLeftClickPerformed(InputAction.CallbackContext p_context)
         {
-            Debug.Log("Click");
 
             var l_ray = m_camera.ScreenPointToRay(Input.mousePosition);
 
             if (!Physics.Raycast(l_ray, out RaycastHit l_hit, 300f, boidMask))
                 return;
             
-            if(!l_hit.transform.TryGetComponent(out BoidsesModel l_boidModel))
+            if(!l_hit.transform.TryGetComponent(out BoidsModel l_boidModel))
                 return;
             
             if(l_boidModel == m_previousSelectedModel)

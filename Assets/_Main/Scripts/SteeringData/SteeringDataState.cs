@@ -5,6 +5,6 @@ namespace _Main.Scripts.SteeringData
 {
     public abstract class SteeringDataState : ScriptableObject
     {
-        public abstract Vector3 GetDir(BoidsesModel p_model);
+        public abstract Vector3 GetDir(BoidsModel p_model);
     }
 }

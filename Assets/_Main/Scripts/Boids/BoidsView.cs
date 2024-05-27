@@ -16,13 +16,13 @@ namespace _Main.Scripts.Boids
         
         private Mesh m_visionConeMesh;
         private MeshFilter m_meshFilter;
-        private BoidsesModel m_model;
+        private BoidsModel m_model;
         private BoidsData m_data;
         private bool m_isBoidSelected;
 
         private void Awake()
         {
-            m_model = GetComponent<BoidsesModel>();
+            m_model = GetComponent<BoidsModel>();
         }
 
         
