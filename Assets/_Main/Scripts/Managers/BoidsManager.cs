@@ -17,8 +17,9 @@ namespace _Main.Scripts.Managers
         [SerializeField] private Vector3 spawnCenter;
         [SerializeField] private Vector3 spawnAreaHalfExtent;
         [SerializeField] private int boidsToSpawn;
-        public static BoidsManager Singleton;
         
+        public static BoidsManager Singleton;
+        private PoolGeneric<BoidsModel> m_boidsPool;
         
         private Bounds m_arenaBounds;
 
@@ -41,6 +42,7 @@ namespace _Main.Scripts.Managers
             m_allSteeringDataStates.Add(SteeringsId.ObstacleAvoidance, data.ObstacleAvoidanceState);
             m_allSteeringDataStates.Add(SteeringsId.Cohesion, data.CohesionState);
             m_allSteeringDataStates.Add(SteeringsId.Alignment, data.AlignmentState);
+            m_boidsPool = new PoolGeneric<BoidsModel>(boidsPrefab);
         }
 
         private void Start()
@@ -59,9 +61,12 @@ namespace _Main.Scripts.Managers
 
         private void SpawnBoids(int p_boidsToSpawn)
         {
+            if(p_boidsToSpawn<0)
+                return;
+            
             for (int l_i = 0; l_i < p_boidsToSpawn; l_i++)
             {
-                var l_boid = Instantiate(boidsPrefab);
+                var l_boid = m_boidsPool.GetOrCreate();
                 Vector3 l_rndSpawnPoint;
                 Vector3 l_rndDir;
                 if (is2D)
@@ -77,11 +82,39 @@ namespace _Main.Scripts.Managers
                     l_boid.ConstrainTo3D();
                 }
                 
-                
+                l_boid.gameObject.SetActive(true);
                 l_boid.Initialize(spawnCenter + l_rndSpawnPoint, l_rndDir);
                 
                 m_allBoids.Add(l_boid);
             }   
+        }
+
+        public void SetBoidsPopulation(int p_newBoidsPopulation)
+        {
+            var l_boidsDiff = p_newBoidsPopulation-m_boidsPool.GetCurrentActiveCount();
+            if (l_boidsDiff>0)
+            {
+                SpawnBoids(l_boidsDiff);
+                return;
+            }
+            
+            DespawnBoids(-l_boidsDiff);
+            
+        }
+
+
+        public void DespawnBoids(int p_boidsToDespawn)
+        {
+            if(p_boidsToDespawn<0)
+                return;
+            
+            for (int l_i = 0; l_i < p_boidsToDespawn; l_i++)
+            {
+                var l_lastBoidInList = m_allBoids[^1];
+                l_lastBoidInList.gameObject.SetActive(false);
+                m_boidsPool.AddToAvailablePool(l_lastBoidInList);
+                m_allBoids.Remove(l_lastBoidInList);
+            }
         }
 
         public void ConstrainBoidsTo2D()

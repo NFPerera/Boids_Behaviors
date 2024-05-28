@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using _Main.Scripts.Enum;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace _Main.Scripts.Managers
 {
     public class UiManager : MonoBehaviour
     {
         [SerializeField] private List<GameObject> allUiElements = new List<GameObject>();
-
+        [SerializeField] private InputField inputField;
         [Header("Steerings Stats")]
         [SerializeField] private TMP_Text obsAvoidTxt;
         [SerializeField] private TMP_Text cohesionTxt;
@@ -118,6 +119,17 @@ namespace _Main.Scripts.Managers
         {
             behavioursObj.SetActive(!behavioursObj.activeSelf);
             dataObj.SetActive(!dataObj.activeSelf);
+        }
+        
+        public void SetBoidsPopulation()
+        {
+            var l_bool = int.TryParse(inputField.text, out int l_result);
+
+            Debug.Log($"String:{inputField.text},  int:{l_result}");
+            if (l_bool)
+            {
+                BoidsManager.Singleton.SetBoidsPopulation(l_result);
+            }
         }
         
         

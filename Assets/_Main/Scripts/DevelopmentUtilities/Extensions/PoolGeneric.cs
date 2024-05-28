@@ -16,7 +16,7 @@ namespace _Main.Scripts.DevelopmentUtilities.Extensions
             m_parent = p_transformParent;
         }
 
-        public T GetorCreate()
+        public T GetOrCreate()
         {
             if (m_availables.Count > 0)
             {
@@ -36,7 +36,7 @@ namespace _Main.Scripts.DevelopmentUtilities.Extensions
             return l_newObj;
         }
 
-        public void AddPool(T p_poolEntry)
+        public void AddToAvailablePool(T p_poolEntry)
         {
             if (!m_inUse.Contains(p_poolEntry)) 
                 return;
@@ -50,5 +50,7 @@ namespace _Main.Scripts.DevelopmentUtilities.Extensions
             m_inUse.Clear();
             m_availables.Clear();
         }
+
+        public int GetCurrentActiveCount() => m_inUse.Count;
     }
 }
