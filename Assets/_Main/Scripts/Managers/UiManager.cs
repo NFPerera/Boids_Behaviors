@@ -131,6 +131,11 @@ namespace _Main.Scripts.Managers
                 BoidsManager.Singleton.SetBoidsPopulation(l_result);
             }
         }
+
+        public void SetWallsInteraction(bool p_b)
+        {
+            GameManager.Singleton.PlaygroundManager.SetWallsInteraction(p_b);
+        }
         
         
     }

@@ -13,7 +13,6 @@ namespace _Main.Scripts.Managers
         [SerializeField] private BoidsManagerData data;
         [SerializeField] private BoidsData boidsData;
         [SerializeField] private BoidsModel boidsPrefab;
-        [SerializeField] private bool is2D;
         [SerializeField] private Vector3 spawnCenter;
         [SerializeField] private Vector3 spawnAreaHalfExtent;
         [SerializeField] private int boidsToSpawn;
@@ -67,20 +66,9 @@ namespace _Main.Scripts.Managers
             for (int l_i = 0; l_i < p_boidsToSpawn; l_i++)
             {
                 var l_boid = m_boidsPool.GetOrCreate();
-                Vector3 l_rndSpawnPoint;
-                Vector3 l_rndDir;
-                if (is2D)
-                {
-                    l_rndSpawnPoint = VectorExtentions.GetRandomRangeVector2(-spawnAreaHalfExtent, spawnAreaHalfExtent);
-                    l_rndDir = VectorExtentions.GetRandomDirVector2();
-                    l_boid.ConstrainTo2D();
-                }
-                else
-                {
-                    l_rndSpawnPoint = VectorExtentions.GetRandomRangeVector3(-spawnAreaHalfExtent, spawnAreaHalfExtent);
-                    l_rndDir = Random.onUnitSphere;
-                    l_boid.ConstrainTo3D();
-                }
+                var l_rndSpawnPoint = VectorExtentions.GetRandomRangeVector3(-spawnAreaHalfExtent, spawnAreaHalfExtent);
+                var l_rndDir = Random.onUnitSphere;
+                l_boid.ConstrainTo3D();
                 
                 l_boid.gameObject.SetActive(true);
                 l_boid.Initialize(spawnCenter + l_rndSpawnPoint, l_rndDir);

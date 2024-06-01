@@ -1,5 +1,7 @@
-﻿using _Main.Scripts.Boids;
+﻿using System;
+using _Main.Scripts.Boids;
 using _Main.Scripts.DevelopmentUtilities;
+using _Main.Scripts.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,45 +9,23 @@ namespace _Main.Scripts.Managers
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private LayerMask boidMask;
-        private Camera m_camera;
-
-
-        private BoidsModel m_previousSelectedModel;
-        private void Start()
+        public static GameManager Singleton;
+        private void Awake()
         {
-            m_camera = Camera.main;
-            SubscribeInputs();
-        }
-
-        private void SubscribeInputs()
-        {
-            var l_manager = MyInputManager.Instance;
-            
-            l_manager.SubscribeInputOnPerformed("LeftClick", OnLeftClickPerformed);
-        }
-
-        private void OnLeftClickPerformed(InputAction.CallbackContext p_context)
-        {
-
-            var l_ray = m_camera.ScreenPointToRay(Input.mousePosition);
-
-            if (!Physics.Raycast(l_ray, out RaycastHit l_hit, 300f, boidMask))
-                return;
-            
-            if(!l_hit.transform.TryGetComponent(out BoidsModel l_boidModel))
-                return;
-            
-            if(l_boidModel == m_previousSelectedModel)
-                return;
-            
-            l_boidModel.GetSelected();
-
-            if (m_previousSelectedModel != default)
+            if (Singleton != null)
             {
-                m_previousSelectedModel.GetUnselected();
+                Destroy(this);
+                return;
             }
-            m_previousSelectedModel = l_boidModel;
+
+            Singleton = this;
         }
+
+
+        public IPlaygroundManager PlaygroundManager => m_currentPlaygroundManager;
+        private IPlaygroundManager m_currentPlaygroundManager;
+        
+
+        public void SetCurrentPlaygroundManager(IPlaygroundManager p_manager) => m_currentPlaygroundManager = p_manager;
     }
 }
