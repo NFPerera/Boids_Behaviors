@@ -125,9 +125,27 @@ namespace _Main.Scripts.DevelopmentUtilities.Extensions
             else return p_v;
         }
         
+        /// <summary> Returns a random Vector3 inside the range. </summary>
         public static Vector3 GetRandomRangeVector3(Vector3 minRange, Vector3 maxRange)
         {
             return new Vector3(Random.Range(minRange.x, maxRange.x), Random.Range(minRange.y, maxRange.y), Random.Range(minRange.z, maxRange.z) );
+        }
+        
+        /// <summary>
+        /// Rotates the first vector to match the forward direction of the second vector.
+        /// </summary>
+        /// <param name="p_vectorToRotate">The vector that needs to be rotated.</param>
+        /// <param name="p_targetForward">The forward direction to align with.</param>
+        /// <returns>The rotated vector.</returns>
+        public static Vector3 RotateVectorToMatchForward(this Vector3 p_vectorToRotate, Vector3 p_targetForward)
+        {
+            // Calculate the rotation needed to align the vectors
+            Quaternion l_rotation = Quaternion.FromToRotation(Vector3.forward, p_targetForward.normalized);
+
+            // Apply the rotation to the vector to rotate
+            Vector3 l_rotatedVector = l_rotation * p_vectorToRotate;
+
+            return l_rotatedVector;
         }
 
         #endregion

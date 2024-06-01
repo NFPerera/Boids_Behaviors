@@ -22,7 +22,7 @@ namespace _Main.Scripts.Managers
         {
             var l_manager = MyInputManager.Instance;
             
-            l_manager.SubscribeInput("LeftClick", OnLeftClickPerformed);
+            l_manager.SubscribeInputOnPerformed("LeftClick", OnLeftClickPerformed);
         }
 
         private void OnLeftClickPerformed(InputAction.CallbackContext p_context)
