@@ -86,7 +86,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
+                    "name": "down",
                     "id": "485f174f-2e62-44f4-9224-5605b7caec55",
                     "path": "<Keyboard>/q",
                     "interactions": "",
@@ -97,7 +97,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "down",
+                    "name": "up",
                     "id": "2c620212-eced-4026-b252-8772d940b7c1",
                     "path": "<Keyboard>/e",
                     "interactions": "",

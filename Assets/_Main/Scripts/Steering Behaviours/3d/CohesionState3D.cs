@@ -3,10 +3,10 @@ using _Main.Scripts.Enum;
 using _Main.Scripts.SteeringData;
 using UnityEngine;
 
-namespace _Main.Scripts.Steering_Behaviours
+namespace _Main.Scripts.Steering_Behaviours._3d
 {
-    [CreateAssetMenu(fileName = "CohesionState", menuName = "main/SteeringsBh/CohesionState", order = 0)]
-    public class CohesionState : SteeringDataState
+    [CreateAssetMenu(fileName = "CohesionState3D", menuName = "main/SteeringsBh/3D/CohesionState3D", order = 0)]
+    public class CohesionState3D : SteeringDataState
     {
         public override Vector3 GetDir(BoidsModel p_model)
         {

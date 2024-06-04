@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6053e1fb6f942fb8e3c2e4a7576192b, type: 3}
-  m_Name: CohesionState
+  m_Script: {fileID: 11500000, guid: 21daa99ef7b54527b62f19db56d74424, type: 3}
+  m_Name: CohesionState2D
   m_EditorClassIdentifier: 

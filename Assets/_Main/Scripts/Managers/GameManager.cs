@@ -1,9 +1,5 @@
-﻿using System;
-using _Main.Scripts.Boids;
-using _Main.Scripts.DevelopmentUtilities;
-using _Main.Scripts.Interfaces;
+﻿using _Main.Scripts.Interfaces;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace _Main.Scripts.Managers
 {
@@ -19,13 +15,16 @@ namespace _Main.Scripts.Managers
             }
 
             Singleton = this;
+            DontDestroyOnLoad(this);
         }
 
 
         public IPlaygroundManager PlaygroundManager => m_currentPlaygroundManager;
         private IPlaygroundManager m_currentPlaygroundManager;
-        
+        public BoidsManager BoidsManager => m_boidsManager;
+        private BoidsManager m_boidsManager;
 
         public void SetCurrentPlaygroundManager(IPlaygroundManager p_manager) => m_currentPlaygroundManager = p_manager;
+        public void SetCurrentBoidsManager(BoidsManager p_manager) => m_boidsManager = p_manager;
     }
 }

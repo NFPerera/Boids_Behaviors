@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1418401d251b4cbb92c0baf247cf7b5e, type: 3}
-  m_Name: AlignmentState
+  m_Script: {fileID: 11500000, guid: f6053e1fb6f942fb8e3c2e4a7576192b, type: 3}
+  m_Name: CohesionState3D
   m_EditorClassIdentifier: 

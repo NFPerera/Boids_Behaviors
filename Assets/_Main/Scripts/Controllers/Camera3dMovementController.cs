@@ -1,13 +1,11 @@
-﻿using System;
-using _Main.Scripts.DevelopmentUtilities;
-using _Main.Scripts.DevelopmentUtilities.Extensions;
+﻿using _Main.Scripts.DevelopmentUtilities;
 using _Main.Scripts.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace _Main.Scripts
+namespace _Main.Scripts.Controllers
 {
-    public class CameraMovementController : MonoBehaviour
+    public class Camera3dMovementController : MonoBehaviour
     {
         [SerializeField] private float normalMovementSpeed=10;
         [SerializeField] private float fastMovementSpeed=30;

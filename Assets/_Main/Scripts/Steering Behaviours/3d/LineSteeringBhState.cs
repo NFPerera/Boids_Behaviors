@@ -2,7 +2,7 @@
 using _Main.Scripts.SteeringData;
 using UnityEngine;
 
-namespace _Main.Scripts.Steering_Behaviours
+namespace _Main.Scripts.Steering_Behaviours._3d
 {
     [CreateAssetMenu(fileName = "LineSteeringBhState", menuName = "main/SteeringsBh/LineSteeringBhState", order = 0)]
     public class LineSteeringBhState : SteeringDataState

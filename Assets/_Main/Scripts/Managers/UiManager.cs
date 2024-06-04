@@ -25,6 +25,7 @@ namespace _Main.Scripts.Managers
         [Header("Stats Obj")] 
         [SerializeField] private GameObject behavioursObj;
         [SerializeField] private GameObject dataObj;
+        [SerializeField] private Toggle toggle;
 
         private bool m_isUiHidden;
         private void Start()
@@ -35,7 +36,7 @@ namespace _Main.Scripts.Managers
 
         public void AddBoidsStat(BoidsStatsModificationsData p_data)
         {
-            var l_manager = BoidsManager.Singleton;
+            var l_manager = GameManager.Singleton.BoidsManager;
             var l_newValue = l_manager.GetBoidsData().CurrBoidsStats[p_data.boidsStatsIds] +
                            p_data.modification;
             l_manager.SetBoidsStats(p_data.boidsStatsIds,l_newValue);
@@ -43,13 +44,13 @@ namespace _Main.Scripts.Managers
         }
         public void SetBoidsStat(BoidsStatsModificationsData p_data)
         {
-            BoidsManager.Singleton.SetBoidsStats(p_data.boidsStatsIds,p_data.modification);
+            GameManager.Singleton.BoidsManager.SetBoidsStats(p_data.boidsStatsIds,p_data.modification);
             RefreshStatUi(p_data.boidsStatsIds);
         }
 
         private void RefreshStatUi(BoidsStatsIds p_statsIds)
         {
-            var l_data = BoidsManager.Singleton.GetBoidsData();
+            var l_data = GameManager.Singleton.BoidsManager.GetBoidsData();
             switch (p_statsIds)
             {
                 case BoidsStatsIds.MovementSpeed:
@@ -81,7 +82,7 @@ namespace _Main.Scripts.Managers
 
         private void RefreshAllUi()
         {
-            var l_data = BoidsManager.Singleton.GetBoidsData();
+            var l_data = GameManager.Singleton.BoidsManager.GetBoidsData();
             speedTxt.text = l_data.CurrBoidsStats[BoidsStatsIds.MovementSpeed].ToString();
             viewRangeTxt.text = l_data.CurrBoidsStats[BoidsStatsIds.ViewRange].ToString();
             viewAngleTxt.text = l_data.CurrBoidsStats[BoidsStatsIds.ViewAngle].ToString();
@@ -128,13 +129,13 @@ namespace _Main.Scripts.Managers
             Debug.Log($"String:{inputField.text},  int:{l_result}");
             if (l_bool)
             {
-                BoidsManager.Singleton.SetBoidsPopulation(l_result);
+                GameManager.Singleton.BoidsManager.SetBoidsPopulation(l_result);
             }
         }
 
-        public void SetWallsInteraction(bool p_b)
+        public void SetWallsInteraction()
         {
-            GameManager.Singleton.PlaygroundManager.SetWallsInteraction(p_b);
+            GameManager.Singleton.PlaygroundManager.SetWallsInteraction(toggle.isOn);
         }
         
         

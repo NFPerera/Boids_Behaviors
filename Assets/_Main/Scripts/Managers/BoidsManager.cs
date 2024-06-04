@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _Main.Scripts.Boids;
 using _Main.Scripts.DevelopmentUtilities.Extensions;
 using _Main.Scripts.Enum;
@@ -10,44 +11,49 @@ namespace _Main.Scripts.Managers
 {
     public class BoidsManager : MonoBehaviour
     {
-        [SerializeField] private BoidsManagerData data;
-        [SerializeField] private BoidsData boidsData;
+        [SerializeField] private BoidsData boidsData3D;
+        [SerializeField] private BoidsData boidsData2D;
         [SerializeField] private BoidsModel boidsPrefab;
-        [SerializeField] private Vector3 spawnCenter;
-        [SerializeField] private Vector3 spawnAreaHalfExtent;
-        [SerializeField] private int boidsToSpawn;
+
+        [SerializeField,HideInInspector] private bool is2d;
+        [SerializeField,HideInInspector] private Vector3 spawnCenter3d;
+        [SerializeField,HideInInspector] private Vector3 spawnArea3dHalfExtent;
+        [SerializeField,HideInInspector] private Vector2 spawnCenter2d;
+        [SerializeField,HideInInspector] private Vector2 spawnArea2dHalfExtent;
         
-        public static BoidsManager Singleton;
+        
         private PoolGeneric<BoidsModel> m_boidsPool;
         
         private Bounds m_arenaBounds;
+        private Vector3 m_currSpawnCenter;
+        private Vector3 m_currSpawnAreaHalfExtent;
+        private BoidsData m_currBoidsData;
 
-        private readonly Dictionary<SteeringsId, SteeringDataState> m_allSteeringDataStates = new Dictionary<SteeringsId, SteeringDataState>();
         private readonly List<BoidsModel> m_allBoids = new List<BoidsModel>();
         private void Awake()
         {
-            if (Singleton != default)
-            {
-                Destroy(this);
-                return;
-            }
-
-            Singleton = this;
-            DontDestroyOnLoad(this);
-
-            m_arenaBounds.center = spawnCenter;
-            m_arenaBounds.extents = spawnAreaHalfExtent;
             
-            m_allSteeringDataStates.Add(SteeringsId.ObstacleAvoidance, data.ObstacleAvoidanceState);
-            m_allSteeringDataStates.Add(SteeringsId.Cohesion, data.CohesionState);
-            m_allSteeringDataStates.Add(SteeringsId.Alignment, data.AlignmentState);
+            if (is2d)
+            {
+                m_currBoidsData = boidsData2D;
+                m_currSpawnCenter = spawnCenter2d;
+                m_currSpawnAreaHalfExtent = spawnArea2dHalfExtent;
+            }
+            else
+            {
+                m_currBoidsData = boidsData3D;
+                m_currSpawnCenter = spawnCenter3d;
+                m_currSpawnAreaHalfExtent = spawnArea3dHalfExtent;
+            }
+            
+            m_arenaBounds.center = m_currSpawnCenter;
+            m_arenaBounds.extents = m_currSpawnAreaHalfExtent;
+            
             m_boidsPool = new PoolGeneric<BoidsModel>(boidsPrefab);
+            GameManager.Singleton.SetCurrentBoidsManager(this);
+            
         }
 
-        private void Start()
-        {
-            SpawnBoids(boidsToSpawn);
-        }
 
         public void CheckForBounds(BoidsModel p_model)
         {
@@ -66,12 +72,21 @@ namespace _Main.Scripts.Managers
             for (int l_i = 0; l_i < p_boidsToSpawn; l_i++)
             {
                 var l_boid = m_boidsPool.GetOrCreate();
-                var l_rndSpawnPoint = VectorExtentions.GetRandomRangeVector3(-spawnAreaHalfExtent, spawnAreaHalfExtent);
+                var l_rndSpawnPoint = VectorExtentions.GetRandomRangeVector3(-m_currSpawnAreaHalfExtent, m_currSpawnAreaHalfExtent);
                 var l_rndDir = Random.onUnitSphere;
-                l_boid.ConstrainTo3D();
                 
                 l_boid.gameObject.SetActive(true);
-                l_boid.Initialize(spawnCenter + l_rndSpawnPoint, l_rndDir);
+                
+                l_boid.Initialize(m_currSpawnCenter + l_rndSpawnPoint, l_rndDir, m_currBoidsData);
+                
+                if (is2d)
+                {
+                    l_boid.ConstrainTo2D();
+                }
+                else
+                {
+                    l_boid.ConstrainTo3D();
+                }
                 
                 m_allBoids.Add(l_boid);
             }   
@@ -123,10 +138,10 @@ namespace _Main.Scripts.Managers
 
         public void SetBoidsStats(BoidsStatsIds p_statsIds, float p_f)
         {
-            boidsData.SetBoidsStat(p_statsIds, p_f);
+            m_currBoidsData.SetBoidsStat(p_statsIds, p_f);
         }
 
-        public BoidsData GetBoidsData() => boidsData;
+        public BoidsData GetBoidsData() => m_currBoidsData;
         
         
         
@@ -135,7 +150,15 @@ namespace _Main.Scripts.Managers
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(spawnCenter, spawnAreaHalfExtent*2);
+            if (is2d)
+            {
+                Gizmos.DrawWireCube(spawnCenter2d, spawnArea2dHalfExtent*2);
+            }
+            else
+            {
+                Gizmos.DrawWireCube(spawnCenter3d, spawnArea3dHalfExtent*2);
+                
+            }
         }
 #endif
         

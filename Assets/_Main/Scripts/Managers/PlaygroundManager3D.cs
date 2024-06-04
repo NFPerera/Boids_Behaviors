@@ -10,6 +10,7 @@ namespace _Main.Scripts.Managers
     {
         [SerializeField] private LayerMask boidMask;
         [SerializeField] private GameObject wallsBox;
+        [SerializeField] private GameObject teleportBox;
         private Camera m_camera;
         private BoidsModel m_previousSelectedModel;
         private void Start()
@@ -18,6 +19,7 @@ namespace _Main.Scripts.Managers
             
             GameManager.Singleton.SetCurrentPlaygroundManager(this);
             SubscribeInputs();
+            teleportBox.SetActive(false);
         }
 
         private void SubscribeInputs()
@@ -52,7 +54,9 @@ namespace _Main.Scripts.Managers
         
         public void SetWallsInteraction(bool p_b)
         {
-            wallsBox.SetActive(p_b);
+            Debug.Log(p_b);
+            wallsBox.SetActive(!p_b);
+            teleportBox.SetActive(p_b);
         }
     }
 }

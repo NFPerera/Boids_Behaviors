@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68a0fd8106004b839b02839af2095d6f, type: 3}
-  m_Name: ObstacleAvoidanceState
+  m_Script: {fileID: 11500000, guid: ba66259ec56b4f36be7931b1652e851e, type: 3}
+  m_Name: ObstacleAvoidanceState2D
   m_EditorClassIdentifier: 

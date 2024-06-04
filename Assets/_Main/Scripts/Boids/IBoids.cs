@@ -5,6 +5,6 @@ namespace _Main.Scripts.Boids
 {
     public interface IBoids
     {
-        void Initialize(Vector3 p_spawnPoint, Vector3 p_initDir);
+        void Initialize(Vector3 p_spawnPoint, Vector3 p_initDir, BoidsData p_data);
     }
 }
