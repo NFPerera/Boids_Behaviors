@@ -37,11 +37,6 @@ namespace _Main.Scripts.Boids
             m_raycastHits = new RaycastHit[5];
         }
 
-        private void Update()
-        {
-            //GameManager.Singleton.BoidsManager.CheckForBounds(this);
-        }
-
         public BoidsData GetData() => m_data;
         public void Move(Vector3 p_dir, float p_speed)
         {
