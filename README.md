@@ -1,2 +1,29 @@
 # Boids_Behaviors
-a basic project with the essential movement behaviors of boids
+
+This project is a didactic tool to understand the multiple behaviors of boids.
+
+---
+# Current Features
+- 3d arena whith obstacles
+- Customizable Stats value for different behaviors:
+  - Speed
+  - Field of view
+  - Range of view
+  - Obstacle avoidance weight
+  - Cohesion weight
+  - Cohesion Radius
+  - Aligment weight
+  - Aligment radius
+  - Total boid population
+- Boid selection (if a boid is selected, it will change colors and its FOV will be visible)
+- Camera movement (same controls that Unity uses in its scene camera)
+---
+# WIP Features
+- 2D arena
+- multiple 2D arenas whith different types of obstacles
+- multiple 3D arenas whith different types of obstacles
+---
+# Future Features
+- Custom arena builder
+- "Debug mod" to activate all vectors view in a selected boid
+- "Follow boid" option if a boid is selected
