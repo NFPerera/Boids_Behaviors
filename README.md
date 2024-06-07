@@ -22,6 +22,7 @@ This project is a didactic tool to understand the multiple behaviors of boids.
 # WIP Features
 - multiple 2D arenas whith different types of obstacles
 - multiple 3D arenas whith different types of obstacles
+- multiple flock in simulation
 ---
 # Future Features
 - Custom arena builder
