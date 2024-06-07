@@ -36,9 +36,16 @@ namespace _Main.Scripts.Managers
 
             if (!Physics.Raycast(l_ray, out RaycastHit l_hit, 300f, boidMask))
                 return;
-            
-            if(!l_hit.transform.TryGetComponent(out BoidsModel l_boidModel))
+
+            if (!l_hit.transform.TryGetComponent(out BoidsModel l_boidModel))
+            {
+                if (m_previousSelectedModel != null)
+                {
+                    m_previousSelectedModel.GetUnselected();
+                    m_previousSelectedModel = null;
+                }
                 return;
+            }
             
             if(l_boidModel == m_previousSelectedModel)
                 return;

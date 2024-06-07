@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7219224001518956353}
   - component: {fileID: 8246870853883398420}
   - component: {fileID: 1199239174750703646}
+  - component: {fileID: 6020092906713851502}
   m_Layer: 0
   m_Name: InputManger
   m_TagString: Untagged
@@ -107,3 +108,17 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &6020092906713851502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2478266544753692261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0617ce266890ec847b8bf235de632293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 8246870853883398420}
+  defaultActionMap: InGame

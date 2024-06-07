@@ -45,7 +45,6 @@ namespace _Main.Scripts.Boids
             {
                 WantedDir = WantedDir.Xyo();
             }
-
             var l_lerpDir = Vector3.Lerp(transform.forward, WantedDir, m_data.GetStatById(BoidsStatsIds.TurningSpeed) * Time.deltaTime);
             
             transform.position += l_lerpDir.normalized * (p_speed * Time.deltaTime);

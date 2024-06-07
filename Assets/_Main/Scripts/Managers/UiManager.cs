@@ -126,7 +126,6 @@ namespace _Main.Scripts.Managers
         {
             var l_bool = int.TryParse(inputField.text, out int l_result);
 
-            Debug.Log($"String:{inputField.text},  int:{l_result}");
             if (l_bool)
             {
                 GameManager.Singleton.BoidsManager.SetBoidsPopulation(l_result);

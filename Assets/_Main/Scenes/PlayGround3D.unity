@@ -311,36 +311,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 144481554}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &165986629 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2478266544753692261, guid: c84a1888507b0484fb0e61a2d9e7f086, type: 3}
-  m_PrefabInstance: {fileID: 1343934208130982709}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &165986631 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8246870853883398420, guid: c84a1888507b0484fb0e61a2d9e7f086, type: 3}
-  m_PrefabInstance: {fileID: 1343934208130982709}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165986629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &165986633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165986629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0617ce266890ec847b8bf235de632293, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInput: {fileID: 165986631}
-  defaultActionMap: InGame
 --- !u!1 &174876679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,74 +985,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 617043737}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &706098072
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 706098075}
-  - component: {fileID: 706098074}
-  - component: {fileID: 706098073}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &706098073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 706098072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &706098074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 706098072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &706098075
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 706098072}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &724232208
 GameObject:
   m_ObjectHideFlags: 0
@@ -2986,6 +2888,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 7a21698f60dc5e744b1ba231fac6fea6, type: 2}
     - target: {fileID: 7126746386242698087, guid: 2c8150f381d4a6c44953f3b4f05b22f6, type: 3}
+      propertyPath: boidsToSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7126746386242698087, guid: 2c8150f381d4a6c44953f3b4f05b22f6, type: 3}
       propertyPath: spawnArea3dHalfExtent.x
       value: 30
       objectReference: {fileID: 0}
@@ -3061,10 +2967,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2478266544753692261, guid: c84a1888507b0484fb0e61a2d9e7f086, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 165986633}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c84a1888507b0484fb0e61a2d9e7f086, type: 3}
 --- !u!1001 &2715856803467167385
 PrefabInstance:
@@ -3077,14 +2980,6 @@ PrefabInstance:
     - target: {fileID: 2220143767270423301, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
       propertyPath: m_Name
       value: InGameUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 2548239102531147719, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
-      propertyPath: toggle
-      value: 
-      objectReference: {fileID: 2715856803467167386}
-    - target: {fileID: 8526867509366072293, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8550605907209704263, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3131,17 +3026,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
---- !u!114 &2715856803467167386 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8526867509366072293, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
-  m_PrefabInstance: {fileID: 2715856803467167385}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3150,7 +3034,6 @@ SceneRoots:
   - {fileID: 1198388252207930619}
   - {fileID: 966521581}
   - {fileID: 1307932416}
-  - {fileID: 706098075}
   - {fileID: 769065220}
   - {fileID: 1343934208130982709}
   - {fileID: 1474053298}
