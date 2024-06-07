@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace _Main.Scripts.Managers
 {
-    public class PlaygroundManager3D : MonoBehaviour,IPlaygroundManager
+    public class PlaygroundManager : MonoBehaviour,IPlaygroundManager
     {
         [SerializeField] private LayerMask boidMask;
         [SerializeField] private GameObject wallsBox;

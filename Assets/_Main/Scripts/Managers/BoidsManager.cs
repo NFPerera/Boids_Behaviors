@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using _Main.Scripts.Boids;
 using _Main.Scripts.DevelopmentUtilities.Extensions;
 using _Main.Scripts.Enum;
-using _Main.Scripts.SteeringData;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,14 +19,13 @@ namespace _Main.Scripts.Managers
         [SerializeField,HideInInspector] private Vector3 spawnArea3dHalfExtent;
         [SerializeField,HideInInspector] private Vector2 spawnCenter2d;
         [SerializeField,HideInInspector] private Vector2 spawnArea2dHalfExtent;
-        
-        
+        [SerializeField] private int boidsToSpawn;
         private PoolGeneric<BoidsModel> m_boidsPool;
         
-        private Bounds m_arenaBounds;
         private Vector3 m_currSpawnCenter;
         private Vector3 m_currSpawnAreaHalfExtent;
         private BoidsData m_currBoidsData;
+        private TimerExtensions m_myTimer;
 
         private readonly List<BoidsModel> m_allBoids = new List<BoidsModel>();
         private void Awake()
@@ -36,33 +34,66 @@ namespace _Main.Scripts.Managers
             if (is2d)
             {
                 m_currBoidsData = boidsData2D;
-                m_currSpawnCenter = spawnCenter2d;
+                m_currSpawnCenter = spawnCenter2d+(Vector2)transform.position;
                 m_currSpawnAreaHalfExtent = spawnArea2dHalfExtent;
             }
             else
             {
                 m_currBoidsData = boidsData3D;
-                m_currSpawnCenter = spawnCenter3d;
+                m_currSpawnCenter = spawnCenter3d+transform.position;
                 m_currSpawnAreaHalfExtent = spawnArea3dHalfExtent;
             }
             
-            m_arenaBounds.center = m_currSpawnCenter;
-            m_arenaBounds.extents = m_currSpawnAreaHalfExtent;
+            
+            m_myTimer = new TimerExtensions(5f, OnTimerComplete);
+            m_myTimer.Start();
             
             m_boidsPool = new PoolGeneric<BoidsModel>(boidsPrefab);
             GameManager.Singleton.SetCurrentBoidsManager(this);
-            
         }
 
-
-        public void CheckForBounds(BoidsModel p_model)
+        private void Start()
         {
-            var l_boidPos = p_model.gameObject.transform.position;
-            if(m_arenaBounds.Contains(l_boidPos))
-                return;
-
-            p_model.gameObject.transform.position = -m_arenaBounds.ClosestPoint(l_boidPos);
+            SpawnBoids(boidsToSpawn);
         }
+
+        private void OnDestroy()
+        {
+            if (m_myTimer != null)
+            {
+                m_myTimer.Stop();
+                m_myTimer = null;
+            }
+        }
+
+        private void OnTimerComplete()
+        {
+            foreach (var l_model in m_allBoids)
+            {
+                if(is2d)
+                    l_model.transform.position = l_model.transform.position.Xyo();
+                
+                if(CheckIfIsInBounds(l_model.transform.position))
+                    continue;
+                
+                l_model.transform.position=Vector3.zero;
+            }
+            m_myTimer.Reset();
+            m_myTimer.Start();
+        }
+
+        private void Update()
+        {
+            if(m_myTimer==null)
+                return;
+            
+            
+            if (m_myTimer.IsRunning())
+            {
+                m_myTimer.Update(Time.deltaTime);
+            }
+        }
+
 
         private void SpawnBoids(int p_boidsToSpawn)
         {
@@ -72,23 +103,28 @@ namespace _Main.Scripts.Managers
             for (int l_i = 0; l_i < p_boidsToSpawn; l_i++)
             {
                 var l_boid = m_boidsPool.GetOrCreate();
-                var l_rndSpawnPoint = VectorExtentions.GetRandomRangeVector3(-m_currSpawnAreaHalfExtent, m_currSpawnAreaHalfExtent);
-                var l_rndDir = Random.onUnitSphere;
+                
+                Vector3 l_rndSpawnPoint;
+                Vector3 l_rndDir;
                 
                 l_boid.gameObject.SetActive(true);
                 
-                l_boid.Initialize(m_currSpawnCenter + l_rndSpawnPoint, l_rndDir, m_currBoidsData);
-                
                 if (is2d)
                 {
+                    l_rndSpawnPoint = VectorExtentions.GetRandomRangeVector2(-m_currSpawnAreaHalfExtent, m_currSpawnAreaHalfExtent);
+                    l_rndDir = Random.insideUnitCircle;
                     l_boid.ConstrainTo2D();
                 }
                 else
                 {
+                    l_rndSpawnPoint = VectorExtentions.GetRandomRangeVector3(-m_currSpawnAreaHalfExtent, m_currSpawnAreaHalfExtent);
+                    l_rndDir = Random.onUnitSphere;
                     l_boid.ConstrainTo3D();
                 }
                 
+                l_boid.Initialize(m_currSpawnCenter + l_rndSpawnPoint, l_rndDir, m_currBoidsData);
                 m_allBoids.Add(l_boid);
+                Debug.Log("Spawn");
             }   
         }
 
@@ -120,6 +156,12 @@ namespace _Main.Scripts.Managers
             }
         }
 
+        private bool CheckIfIsInBounds(Vector3 p_pos)
+        {
+            return (p_pos.x >= m_currSpawnCenter.x - m_currSpawnAreaHalfExtent.x && p_pos.x <= m_currSpawnCenter.x + m_currSpawnAreaHalfExtent.x) &&
+                   (p_pos.y >= m_currSpawnCenter.y - m_currSpawnAreaHalfExtent.y && p_pos.y <= m_currSpawnCenter.y + m_currSpawnAreaHalfExtent.y) &&
+                   (p_pos.z >= m_currSpawnCenter.z - m_currSpawnAreaHalfExtent.z && p_pos.z <= m_currSpawnCenter.z + m_currSpawnAreaHalfExtent.z);
+        }
         public void ConstrainBoidsTo2D()
         {
             foreach (var l_boid in m_allBoids)
@@ -134,6 +176,12 @@ namespace _Main.Scripts.Managers
             {
                 l_boid.ConstrainTo3D();
             }
+        }
+
+        public void SetBoidsFlock(int p_flockAmount)
+        {
+            //for, i %% p_flockAmount = id de tu nueva flock
+            //  flockData, 
         }
 
         public void SetBoidsStats(BoidsStatsIds p_statsIds, float p_f)
@@ -152,11 +200,11 @@ namespace _Main.Scripts.Managers
             Gizmos.color = Color.red;
             if (is2d)
             {
-                Gizmos.DrawWireCube(spawnCenter2d, spawnArea2dHalfExtent*2);
+                Gizmos.DrawWireCube(spawnCenter2d+(Vector2)transform.position, spawnArea2dHalfExtent*2);
             }
             else
             {
-                Gizmos.DrawWireCube(spawnCenter3d, spawnArea3dHalfExtent*2);
+                Gizmos.DrawWireCube(spawnCenter3d+transform.position, spawnArea3dHalfExtent*2);
                 
             }
         }

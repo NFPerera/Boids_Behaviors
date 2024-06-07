@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _Main.Scripts
 {
-    public class WallTriggerTeleporter : MonoBehaviour
+    public class WallCollisionTeleporter : MonoBehaviour
     {
         
 
