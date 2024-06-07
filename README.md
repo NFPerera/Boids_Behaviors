@@ -4,7 +4,8 @@ This project is a didactic tool to understand the multiple behaviors of boids.
 
 ---
 # Current Features
-- 3d arena whith obstacles
+- 3d arena 
+- 2D arena
 - Customizable Stats value for different behaviors:
   - Speed
   - Field of view
@@ -19,7 +20,6 @@ This project is a didactic tool to understand the multiple behaviors of boids.
 - Camera movement (same controls that Unity uses in its scene camera)
 ---
 # WIP Features
-- 2D arena
 - multiple 2D arenas whith different types of obstacles
 - multiple 3D arenas whith different types of obstacles
 ---
