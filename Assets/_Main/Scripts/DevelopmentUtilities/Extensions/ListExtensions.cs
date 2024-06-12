@@ -18,5 +18,15 @@ namespace _Main.Scripts.DevelopmentUtilities.Extensions
 
             return l_unmatchedList;
         }
+        
+        public static void RemoveLast<T>(this List<T> p_list)
+        {
+            if (p_list == null || p_list.Count == 0)
+            {
+                return; // Alternatively, you might want to throw an exception if the list is null or empty.
+            }
+
+            p_list.RemoveAt(p_list.Count - 1);
+        }
     }
 }

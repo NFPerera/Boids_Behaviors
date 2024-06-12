@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using _Main.Scripts.DevelopmentUtilities.Extensions;
 using _Main.Scripts.Enum;
-using _Main.Scripts.Managers;
+using _Main.Scripts.ScriptableObjects;
 using UnityEngine;
 
 namespace _Main.Scripts.Boids
@@ -11,15 +11,15 @@ namespace _Main.Scripts.Boids
     [RequireComponent(typeof(BoidsView))]
     public class BoidsModel : MonoBehaviour, IBoids
     {
-        [SerializeField] private BoidsData data;
-        
+        private BoidsData m_data;
         
         private BoidsController m_controller;
+        private FlockData m_currentFlockData;
         private BoidsView m_view;
         private Rigidbody m_rigidbody;
-        private bool m_2dMovement;
-        private RaycastHit[] m_raycastHits;
+        private RaycastHit[] m_obstacleRayHit;
         public Vector3 WantedDir { get; private set; }
+        public bool Is2D { get; private set; }
 
         private void Awake()
         {
@@ -28,32 +28,30 @@ namespace _Main.Scripts.Boids
             m_rigidbody = GetComponent<Rigidbody>();
         }
 
-        public void Initialize(Vector3 p_spawnPoint, Vector3 p_initDir)
+        public void Initialize(Vector3 p_spawnPoint, Vector3 p_initDir, FlockData p_data, bool p_is2D)
         {
             transform.position = p_spawnPoint;
+            m_data = p_data.BoidsData;
+            m_currentFlockData = p_data;
             
             var l_targetRotation = Quaternion.LookRotation(p_initDir);
             transform.rotation = l_targetRotation;
-            m_raycastHits = new RaycastHit[5];
+            m_obstacleRayHit = new RaycastHit[5];
+            m_view.RefreshFlockView(m_currentFlockData);
+            Is2D = p_is2D;
+            m_controller.Initialize(this);
         }
 
-        private void Update()
-        {
-            BoidsManager.Singleton.CheckForBounds(this);
-        }
-
-        public BoidsData GetData() => data;
-        public void Move(Vector3 p_dir, float p_speed)
+        public BoidsData GetData() => m_data;
+        public void Move3d(Vector3 p_dir, float p_speed)
         {
             WantedDir = p_dir;
-            if(m_2dMovement)
-            {
-                WantedDir = WantedDir.Xyo();
-            }
-
-            var l_lerpDir = Vector3.Lerp(transform.forward, WantedDir, data.GetStatById(BoidsStatsIds.TurningSpeed) * Time.deltaTime);
             
-            transform.position += l_lerpDir.normalized * (p_speed * Time.deltaTime);
+            var l_lerpDir = Vector3.Lerp(transform.forward, WantedDir, m_data.GetStatById(BoidsStatsIds.TurningSpeed) * Time.deltaTime);
+            
+            m_rigidbody.MovePosition(transform.position+l_lerpDir.normalized * (p_speed * Time.deltaTime));
+            
+            //transform.position += l_lerpDir.normalized * (p_speed * Time.deltaTime);
             transform.LookAt(transform.position + l_lerpDir);
         }
         
@@ -61,44 +59,43 @@ namespace _Main.Scripts.Boids
         {
             WantedDir = p_dir.normalized;
 
-            var l_accelerationVector = WantedDir * (data.GetStatById(BoidsStatsIds.AccelerationRate) * p_accMult);
+            var l_accelerationVector = WantedDir * (m_data.GetStatById(BoidsStatsIds.AccelerationRate) * p_accMult);
 
             var l_velocity = m_rigidbody.velocity;
             l_velocity += l_accelerationVector * Time.deltaTime;
 
             
-            var l_lerpDir = Vector3.Lerp(transform.forward, WantedDir, data.GetStatById(BoidsStatsIds.TurningSpeed) * Time.deltaTime);
+            var l_lerpDir = Vector3.Lerp(transform.forward, WantedDir, m_data.GetStatById(BoidsStatsIds.TurningSpeed) * Time.deltaTime);
             
             
-            m_rigidbody.velocity = Vector2.ClampMagnitude(l_velocity, data.GetStatById(BoidsStatsIds.TerminalSpeed));
+            m_rigidbody.velocity = Vector2.ClampMagnitude(l_velocity, m_data.GetStatById(BoidsStatsIds.TerminalSpeed));
             transform.LookAt(transform.position + l_lerpDir);
         }
 
         public float GetCurrSpeedBasedOnDistance(float p_decreasePace)
         {
-            var l_size = Physics.RaycastNonAlloc(transform.position, transform.forward, m_raycastHits, 
-                data.GetStatById(BoidsStatsIds.ViewRange), data.ObstacleMask);
+            var l_size = Physics.RaycastNonAlloc(transform.position, transform.forward, m_obstacleRayHit, 
+                m_data.GetStatById(BoidsStatsIds.ViewRange), m_data.ObstacleMask);
             
             if (l_size < 1)
-                return data.GetStatById(BoidsStatsIds.MovementSpeed);
+                return m_data.GetStatById(BoidsStatsIds.MovementSpeed);
 
-            var l_closestDistanceToObs = data.GetStatById(BoidsStatsIds.ViewRange);
+            var l_closestDistanceToObs = m_data.GetStatById(BoidsStatsIds.ViewRange);
 
             for (int l_i = 0; l_i < l_size; l_i++)
             {
-                if (m_raycastHits[l_i].distance < l_closestDistanceToObs)
+                if (m_obstacleRayHit[l_i].distance < l_closestDistanceToObs)
                 {
-                    l_closestDistanceToObs = m_raycastHits[l_i].distance;
+                    l_closestDistanceToObs = m_obstacleRayHit[l_i].distance;
                 }
             }
             
             //return (data.TerminalVelocity)/(p_decreasePace+l_closestDistanceToObs);
-            return data.GetStatById(BoidsStatsIds.MovementSpeed) / (1 + (float)Math.Pow(p_decreasePace * l_closestDistanceToObs, 2));
+            return m_data.GetStatById(BoidsStatsIds.MovementSpeed) / (1 + (float)Math.Pow(p_decreasePace * l_closestDistanceToObs, 2));
         }
         
         public void ConstrainTo2D()
         {
-            m_2dMovement = true;
             var l_transform = transform;
             l_transform.position = l_transform.position.Xyo();
             var l_newRot =transform.rotation.eulerAngles.Xyo();
@@ -110,7 +107,6 @@ namespace _Main.Scripts.Boids
         
         public void ConstrainTo3D()
         {
-            m_2dMovement = false;
             m_rigidbody.constraints = RigidbodyConstraints.None;
         }
 
@@ -120,29 +116,45 @@ namespace _Main.Scripts.Boids
 
         public void GetSelected()
         {
-            m_view.ChangeToSelectedMode();
+            m_view.ChangeToSelectedMode(m_currentFlockData);
         }
 
         public void GetUnselected()
         {
-            m_view.ChangeToUnselectedMode();
+            m_view.ChangeToUnselectedMode(m_currentFlockData);
+        }
+
+        public void ChangeFlock(FlockData p_newFlockData)
+        {
+            m_currentFlockData = p_newFlockData;
+            m_data = p_newFlockData.BoidsData;
+            m_view.RefreshFlockView(m_currentFlockData);
+            m_allNeighbors.Clear();
         }
         private void OnTriggerEnter(Collider p_other)
         {
-            if(p_other.TryGetComponent(out BoidsModel l_model))
-                m_allNeighbors.Add(l_model);
+            if(!p_other.TryGetComponent(out BoidsModel l_model))
+                return;
+            
+            if(l_model.GetFlockId() != m_currentFlockData.Id)
+                return;
+            
+            m_allNeighbors.Add(l_model);
         }
 
         private void OnTriggerExit(Collider p_other)
         {
-            if (p_other.TryGetComponent(out BoidsModel l_model))
-            {
-                m_allNeighbors.Remove(l_model);
-            }
+            if(!p_other.TryGetComponent(out BoidsModel l_model))
+                return;
+            
+            if(l_model.GetFlockId() != m_currentFlockData.Id)
+                return;
+                
+            m_allNeighbors.Remove(l_model);
         }
 
+        public string GetFlockId() => m_currentFlockData.Id;
 
 
-        
     }
 }

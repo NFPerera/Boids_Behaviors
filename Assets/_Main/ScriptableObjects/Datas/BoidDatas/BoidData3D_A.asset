@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a57d703d7fa48a7b2189f980af57562, type: 3}
+  m_Name: BoidData3D_A
+  m_EditorClassIdentifier: 
+  <SteeringBehaviours>k__BackingField:
+  - {fileID: 11400000, guid: 4d06f8acf072db740b260d3a73a521f6, type: 2}
+  - {fileID: 11400000, guid: 59e3060a3ee24bc4da50c58253b32008, type: 2}
+  - {fileID: 11400000, guid: 264d443fc56ca3b4aa20aca88d3d3224, type: 2}
+  <BaseBoidsStats>k__BackingField:
+    m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+    m_values:
+    - 0.1
+    - 1
+    - 0.1
+    - 1
+    - 1
+    - 10
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+  <CurrBoidsStats>k__BackingField:
+    m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+    m_values:
+    - 0.3
+    - 6
+    - 0.5
+    - 6
+    - 10
+    - 200
+    - 5
+    - 2
+    - 20
+    - 10
+    - 8
+  <MaxBoidsStats>k__BackingField:
+    m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+    m_values:
+    - 100
+    - 100
+    - 100
+    - 100
+    - 100
+    - 360
+    - 100
+    - 100
+    - 100
+    - 100
+    - 100
+  <ObstacleMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 256

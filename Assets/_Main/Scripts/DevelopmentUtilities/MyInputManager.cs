@@ -44,7 +44,7 @@ namespace _Main.Scripts.DevelopmentUtilities
             return p_action != default;
         }
 
-        public void SubscribeInput(string p_inputId, Action<InputAction.CallbackContext> p_action)
+        public void SubscribeInputOnPerformed(string p_inputId, Action<InputAction.CallbackContext> p_action)
         {
             if (!TryGetInputAction(p_inputId, out var l_action))
             {
@@ -55,7 +55,18 @@ namespace _Main.Scripts.DevelopmentUtilities
             l_action.performed += p_action;
         }
         
-        public void UnsubscribeInput(string p_inputId, Action<InputAction.CallbackContext> p_action)
+        public void SubscribeInputOnCanceled(string p_inputId, Action<InputAction.CallbackContext> p_action)
+        {
+            if (!TryGetInputAction(p_inputId, out var l_action))
+            {
+                Debug.LogError("Requested id not found");
+                return;
+            }
+
+            l_action.canceled += p_action;
+        }
+        
+        public void UnsubscribeInputOnPerformed(string p_inputId, Action<InputAction.CallbackContext> p_action)
         {
             if (!TryGetInputAction(p_inputId, out var l_action))
             {
@@ -64,6 +75,16 @@ namespace _Main.Scripts.DevelopmentUtilities
             }
 
             l_action.performed -= p_action;
+        }
+        public void UnsubscribeInputOnCanceled(string p_inputId, Action<InputAction.CallbackContext> p_action)
+        {
+            if (!TryGetInputAction(p_inputId, out var l_action))
+            {
+                Debug.LogError("Requested id not found");
+                return;
+            }
+
+            l_action.canceled -= p_action;
         }
 
         public void ChangeActionMap(string p_actionMap)
