@@ -4,12 +4,13 @@ using _Main.Scripts.Enum;
 using _Main.Scripts.SteeringData;
 using UnityEngine;
 
-namespace _Main.Scripts.Boids
+namespace _Main.Scripts.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "BoidsData", menuName = "main/BoidsData", order = 0)]
     public class BoidsData : ScriptableObject
     {
-        [field : SerializeField] public List<SteeringDataState> SteeringBehaviours { get; private set; } 
+        [field : SerializeField] public List<SteeringDataState> SteeringBehaviours3D { get; private set; } 
+        [field : SerializeField] public List<SteeringDataState> SteeringBehaviours2D { get; private set; } 
         
         [field: SerializeField] public SerializableDictionary<BoidsStatsIds, float> BaseBoidsStats { get; private set; } 
         [field: SerializeField] public SerializableDictionary<BoidsStatsIds, float> CurrBoidsStats { get; private set; }
@@ -28,8 +29,6 @@ namespace _Main.Scripts.Boids
         
         private void CheckUpgradeIsInBounds(BoidsStatsIds p_statsId)
         {
-            
-            
             if (CurrBoidsStats[p_statsId] < BaseBoidsStats[p_statsId])
             {
                 CurrBoidsStats[p_statsId] = BaseBoidsStats[p_statsId];

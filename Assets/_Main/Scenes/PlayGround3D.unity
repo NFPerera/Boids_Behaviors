@@ -2903,6 +2903,26 @@ PrefabInstance:
       propertyPath: spawnArea3dHalfExtent.z
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 7126746386242698087, guid: 2c8150f381d4a6c44953f3b4f05b22f6, type: 3}
+      propertyPath: allFlocksData.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7126746386242698087, guid: 2c8150f381d4a6c44953f3b4f05b22f6, type: 3}
+      propertyPath: allFlocksData.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 16aeac0863a86cc4a86ada46e97372a8, type: 2}
+    - target: {fileID: 7126746386242698087, guid: 2c8150f381d4a6c44953f3b4f05b22f6, type: 3}
+      propertyPath: allFlocksData.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: b4739c28be5b92343b01baa98b3221e2, type: 2}
+    - target: {fileID: 7126746386242698087, guid: 2c8150f381d4a6c44953f3b4f05b22f6, type: 3}
+      propertyPath: allFlocksData.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 45e82cb6b9898e7488d10fe7a7f67302, type: 2}
+    - target: {fileID: 7126746386242698087, guid: 2c8150f381d4a6c44953f3b4f05b22f6, type: 3}
+      propertyPath: allFlocksData.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1089c924a3256274894f0ac4b839c8d3, type: 2}
     - target: {fileID: 7915476273486788504, guid: 2c8150f381d4a6c44953f3b4f05b22f6, type: 3}
       propertyPath: m_Name
       value: BoidManager
@@ -2977,9 +2997,37 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1970514630192939830, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1970514630192939830, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1970514630192939830, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2220143767270423301, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
       propertyPath: m_Name
       value: InGameUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367429433588575259, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.000061035156
+      objectReference: {fileID: 0}
+    - target: {fileID: 5621330833019606417, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5621330833019606417, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5621330833019606417, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8550605907209704263, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
       propertyPath: m_LocalPosition.x

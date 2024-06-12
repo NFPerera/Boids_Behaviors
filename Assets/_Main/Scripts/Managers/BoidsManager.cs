@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using _Main.Scripts.Boids;
 using _Main.Scripts.DevelopmentUtilities.Extensions;
 using _Main.Scripts.Enum;
+using _Main.Scripts.ScriptableObjects;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,8 +12,6 @@ namespace _Main.Scripts.Managers
 {
     public class BoidsManager : MonoBehaviour
     {
-        [SerializeField] private BoidsData boidsData3D;
-        [SerializeField] private BoidsData boidsData2D;
         [SerializeField] private BoidsModel boidsPrefab;
 
         [SerializeField,HideInInspector] private bool is2d;
@@ -20,26 +20,26 @@ namespace _Main.Scripts.Managers
         [SerializeField,HideInInspector] private Vector2 spawnCenter2d;
         [SerializeField,HideInInspector] private Vector2 spawnArea2dHalfExtent;
         [SerializeField] private int boidsToSpawn;
-        private PoolGeneric<BoidsModel> m_boidsPool;
+        [SerializeField] private List<FlockData> allFlocksData;
         
+        private PoolGeneric<BoidsModel> m_boidsPool;
+        private List<FlockData> m_activeFlocksData=new List<FlockData>();
         private Vector3 m_currSpawnCenter;
         private Vector3 m_currSpawnAreaHalfExtent;
-        private BoidsData m_currBoidsData;
         private TimerExtensions m_myTimer;
 
+        
         private readonly List<BoidsModel> m_allBoids = new List<BoidsModel>();
         private void Awake()
         {
             
             if (is2d)
             {
-                m_currBoidsData = boidsData2D;
                 m_currSpawnCenter = spawnCenter2d+(Vector2)transform.position;
                 m_currSpawnAreaHalfExtent = spawnArea2dHalfExtent;
             }
             else
             {
-                m_currBoidsData = boidsData3D;
                 m_currSpawnCenter = spawnCenter3d+transform.position;
                 m_currSpawnAreaHalfExtent = spawnArea3dHalfExtent;
             }
@@ -50,6 +50,7 @@ namespace _Main.Scripts.Managers
             
             m_boidsPool = new PoolGeneric<BoidsModel>(boidsPrefab);
             GameManager.Singleton.SetCurrentBoidsManager(this);
+            m_activeFlocksData.Add(allFlocksData[0]);
         }
 
         private void Start()
@@ -65,6 +66,8 @@ namespace _Main.Scripts.Managers
                 m_myTimer = null;
             }
         }
+
+        public List<FlockData> GetAllFlockData() => allFlocksData;
 
         private void OnTimerComplete()
         {
@@ -114,6 +117,7 @@ namespace _Main.Scripts.Managers
                     l_rndSpawnPoint = VectorExtentions.GetRandomRangeVector2(-m_currSpawnAreaHalfExtent, m_currSpawnAreaHalfExtent);
                     l_rndDir = Random.insideUnitCircle;
                     l_boid.ConstrainTo2D();
+                    
                 }
                 else
                 {
@@ -122,9 +126,9 @@ namespace _Main.Scripts.Managers
                     l_boid.ConstrainTo3D();
                 }
                 
-                l_boid.Initialize(m_currSpawnCenter + l_rndSpawnPoint, l_rndDir, m_currBoidsData);
                 m_allBoids.Add(l_boid);
-                Debug.Log("Spawn");
+                
+                l_boid.Initialize(m_currSpawnCenter + l_rndSpawnPoint, l_rndDir, GetNextFlockData(),is2d);
             }   
         }
 
@@ -155,6 +159,8 @@ namespace _Main.Scripts.Managers
                 m_allBoids.Remove(l_lastBoidInList);
             }
         }
+        
+        
 
         private bool CheckIfIsInBounds(Vector3 p_pos)
         {
@@ -178,18 +184,52 @@ namespace _Main.Scripts.Managers
             }
         }
 
-        public void SetBoidsFlock(int p_flockAmount)
+
+
+
+        public void AddNewFlock()
+        {
+            if (m_activeFlocksData.Count > allFlocksData.Count)
+            {
+                Debug.LogError("Error while adding new flock to current simulation, index out of data range");
+                return;
+            }
+            m_activeFlocksData.Add(allFlocksData[m_activeFlocksData.Count]);
+        }
+
+        public void RemoveFlock()
+        {
+            if (m_activeFlocksData.Count < 1)
+            {
+                Debug.LogError("Error while removing flock to current simulation, index bellow 0");
+                return;
+            }
+            m_activeFlocksData.RemoveLast();
+        }
+        public void UpdateBoidsFlock(int p_flockAmount)
         {
             //for, i %% p_flockAmount = id de tu nueva flock
-            //  flockData, 
+            //  flockData, mesh, default mat, selected mat, statsdata
+            if (p_flockAmount > m_activeFlocksData.Count)
+            {
+                Debug.LogError("Flock amount request exceeded current flock capacity");
+                return;
+            }
+            
+            for (int i = 0; i < m_allBoids.Count; i++)
+            {
+                var l_flockData = m_activeFlocksData[i % p_flockAmount];
+                var l_boid = m_allBoids[i];
+                l_boid.ChangeFlock(l_flockData);
+            }
         }
 
-        public void SetBoidsStats(BoidsStatsIds p_statsIds, float p_f)
+        private FlockData GetNextFlockData() => allFlocksData[m_allBoids.Count % m_activeFlocksData.Count];
+        public void SetBoidsStats(int p_flockId,BoidsStatsIds p_statsIds, float p_f)
         {
-            m_currBoidsData.SetBoidsStat(p_statsIds, p_f);
+            m_activeFlocksData[p_flockId].BoidsData.SetBoidsStat(p_statsIds, p_f);
         }
-
-        public BoidsData GetBoidsData() => m_currBoidsData;
+        public BoidsData GetBoidsDataByFlockId(int p_flockId) => m_activeFlocksData[p_flockId].BoidsData;
         
         
         

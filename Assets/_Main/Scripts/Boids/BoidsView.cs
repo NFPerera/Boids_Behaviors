@@ -1,4 +1,5 @@
 ﻿using _Main.Scripts.Enum;
+using _Main.Scripts.ScriptableObjects;
 using UnityEngine;
 
 namespace _Main.Scripts.Boids
@@ -7,8 +8,8 @@ namespace _Main.Scripts.Boids
     [RequireComponent(typeof(MeshFilter))]
     public class BoidsView : MonoBehaviour
     {
-        [SerializeField] private GameObject selectedView;
-        [SerializeField] private GameObject unselectedView;
+        [SerializeField] private MeshFilter meshFilter;
+        [SerializeField] private MeshRenderer meshRenderer;
         [Header("FOV Settings")]
         [SerializeField] private Transform fovOffset;
         [SerializeField] private Material visionConeMaterial;
@@ -35,17 +36,22 @@ namespace _Main.Scripts.Boids
             m_data = m_model.GetData();
         }
 
-        public void ChangeToSelectedMode()
-        {
-            m_isBoidSelected = true;
-            selectedView.SetActive(true);
-            unselectedView.SetActive(false);
-        }
-        public void ChangeToUnselectedMode()
+        public void RefreshFlockView(FlockData p_data)
         {
             m_isBoidSelected = false;
-            selectedView.SetActive(false);
-            unselectedView.SetActive(true);
+            meshFilter.mesh = p_data.BoidsMesh;
+            meshRenderer.material = p_data.DefaultMaterial;
+        }
+        
+        public void ChangeToSelectedMode(FlockData p_data)
+        {
+            m_isBoidSelected = true;
+            meshRenderer.material = p_data.SelectedMaterial;
+        }
+        public void ChangeToUnselectedMode(FlockData p_data)
+        {
+            m_isBoidSelected = false;
+            meshRenderer.material = p_data.DefaultMaterial;
             m_visionConeMesh.Clear();
         }
 
