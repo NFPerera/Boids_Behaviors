@@ -21,7 +21,7 @@ namespace _Main.Scripts.Boids
                 else
                     l_wantedDir += m_model.GetData().SteeringBehaviours3D[l_i].GetDir(m_model);
             }
-            m_model.Move3d((gameObject.transform.forward + l_wantedDir), m_model.GetCurrSpeedBasedOnDistance(0.2f));
+            m_model.Move((gameObject.transform.forward + l_wantedDir), m_model.GetCurrSpeedBasedOnDistance(0.2f));
             
             
         }

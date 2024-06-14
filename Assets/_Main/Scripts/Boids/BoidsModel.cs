@@ -43,7 +43,7 @@ namespace _Main.Scripts.Boids
         }
 
         public BoidsData GetData() => m_data;
-        public void Move3d(Vector3 p_dir, float p_speed)
+        public void Move(Vector3 p_dir, float p_speed)
         {
             WantedDir = p_dir;
             

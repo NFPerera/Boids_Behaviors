@@ -20,12 +20,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c89797f0ab68c22468665219352dd26a, type: 2}
   - {fileID: 11400000, guid: 0fc4bded8478fe64f9377667f31da666, type: 2}
   - {fileID: 11400000, guid: a4155bbf487560c46aba56fdf2f6a67b, type: 2}
-  <BaseBoidsStats>k__BackingField:
+  <MinBoidsStats>k__BackingField:
     m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
     m_values:
-    - 0.1
     - 1
-    - 0.1
+    - 1
+    - 1
     - 1
     - 1
     - 10
@@ -34,6 +34,20 @@ MonoBehaviour:
     - 1
     - 1
     - 1
+  <DefaultBoidsStats>k__BackingField:
+    m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
+    m_values:
+    - 0.3
+    - 10
+    - 0.5
+    - 6
+    - 10
+    - 200
+    - 2
+    - 5
+    - 20
+    - 10
+    - 8
   <CurrBoidsStats>k__BackingField:
     m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
     m_values:

@@ -204,6 +204,7 @@ namespace _Main.Scripts.Managers
                 Debug.LogError("Error while removing flock to current simulation, index bellow 0");
                 return;
             }
+            m_activeFlocksData.GetLastElement().BoidsData.ResetCurrBoidsStats();
             m_activeFlocksData.RemoveLast();
         }
         public void UpdateBoidsFlock(int p_flockAmount)
