@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a57d703d7fa48a7b2189f980af57562, type: 3}
   m_Name: BoidData3D_A
   m_EditorClassIdentifier: 
-  <SteeringBehaviours>k__BackingField:
+  <SteeringBehaviours3D>k__BackingField:
   - {fileID: 11400000, guid: 4d06f8acf072db740b260d3a73a521f6, type: 2}
   - {fileID: 11400000, guid: 59e3060a3ee24bc4da50c58253b32008, type: 2}
   - {fileID: 11400000, guid: 264d443fc56ca3b4aa20aca88d3d3224, type: 2}
+  <SteeringBehaviours2D>k__BackingField:
+  - {fileID: 11400000, guid: c89797f0ab68c22468665219352dd26a, type: 2}
+  - {fileID: 11400000, guid: 0fc4bded8478fe64f9377667f31da666, type: 2}
+  - {fileID: 11400000, guid: a4155bbf487560c46aba56fdf2f6a67b, type: 2}
   <BaseBoidsStats>k__BackingField:
     m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
     m_values:
@@ -34,12 +38,12 @@ MonoBehaviour:
     m_keys: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a000000
     m_values:
     - 0.3
-    - 6
+    - 30
     - 0.5
     - 6
     - 10
     - 200
-    - 5
+    - 10
     - 2
     - 20
     - 10
