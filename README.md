@@ -19,10 +19,10 @@ This project is a didactic tool to understand the multiple behaviors of boids.
 - Boid selection (if a boid is selected, it will change colors and its FOV will be visible)
 - Camera movement (same controls that Unity uses in its scene camera)
 - multiple flock in simulation (heach flock has is own set of custom stats)
----
-# WIP Features
 - multiple 2D arenas whith different types of obstacles
 - multiple 3D arenas whith different types of obstacles
+---
+# WIP Features
 ---
 # Future Features
 - Custom arena builder
