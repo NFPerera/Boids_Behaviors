@@ -74,7 +74,9 @@ namespace _Main.Scripts.Managers
             foreach (var l_model in m_allBoids)
             {
                 if(is2d)
+                {
                     l_model.transform.position = l_model.transform.position.Xyo();
+                }
                 
                 if(CheckIfIsInBounds(l_model.transform.position))
                     continue;

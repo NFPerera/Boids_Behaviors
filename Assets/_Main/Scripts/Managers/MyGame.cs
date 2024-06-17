@@ -7,5 +7,6 @@
         public const string CAMERA_MOVEMENT_ID = "CameraMovement";
         public const string CAMERA_ROTATION_ID = "CameraRotation";
         public const string LEFT_SHIFT_ID = "LeftShift";
+        public const string ESCAPE_ID = "Escape";
     }
 }

@@ -50,6 +50,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   inputField: {fileID: 0}
   obsAvoidTxt: {fileID: 0}
   cohesionTxt: {fileID: 0}
@@ -61,3 +62,16 @@ MonoBehaviour:
   viewAngleTxt: {fileID: 0}
   behavioursObj: {fileID: 0}
   dataObj: {fileID: 0}
+  toggle: {fileID: 0}
+  dropdown: {fileID: 0}
+  maxDropdownOptions: 4
+  dropdownOptionDatas:
+  - m_Text: Flock A
+    m_Image: {fileID: 21300000, guid: 46f7598d3d116e645b5b6742885e9c16, type: 3}
+  - m_Text: Flock B
+    m_Image: {fileID: 21300000, guid: d8e5f677a85eba94486f653ae51c172d, type: 3}
+  - m_Text: Flock C
+    m_Image: {fileID: 21300000, guid: 0d5f95623e3549d4fa33d007c9af665d, type: 3}
+  - m_Text: Flock D
+    m_Image: {fileID: 21300000, guid: 5be491aea1bdddc47b694ff05346088a, type: 3}
+  removeFlockButton: {fileID: 0}

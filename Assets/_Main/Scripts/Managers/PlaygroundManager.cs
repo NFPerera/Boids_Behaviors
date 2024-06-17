@@ -1,4 +1,5 @@
-﻿using _Main.Scripts.Boids;
+﻿using System;
+using _Main.Scripts.Boids;
 using _Main.Scripts.DevelopmentUtilities;
 using _Main.Scripts.Interfaces;
 using UnityEngine;
@@ -18,15 +19,13 @@ namespace _Main.Scripts.Managers
             m_camera = Camera.main;
             
             GameManager.Singleton.SetCurrentPlaygroundManager(this);
-            SubscribeInputs();
+            MyInputManager.Instance.SubscribeInputOnPerformed(MyGame.LEFT_CLICK_ID, OnLeftClickPerformed);
             teleportBox.SetActive(false);
         }
 
-        private void SubscribeInputs()
+        private void OnDestroy()
         {
-            var l_manager = MyInputManager.Instance;
-            
-            l_manager.SubscribeInputOnPerformed(MyGame.LEFT_CLICK_ID, OnLeftClickPerformed);
+            MyInputManager.Instance.UnsubscribeInputOnPerformed(MyGame.LEFT_CLICK_ID, OnLeftClickPerformed);
         }
 
         private void OnLeftClickPerformed(InputAction.CallbackContext p_context)
