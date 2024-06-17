@@ -26,7 +26,7 @@ namespace _Main.Scripts.Managers
         {
             var l_manager = MyInputManager.Instance;
             
-            l_manager.SubscribeInputOnPerformed("LeftClick", OnLeftClickPerformed);
+            l_manager.SubscribeInputOnPerformed(MyGame.LEFT_CLICK_ID, OnLeftClickPerformed);
         }
 
         private void OnLeftClickPerformed(InputAction.CallbackContext p_context)
@@ -35,9 +35,6 @@ namespace _Main.Scripts.Managers
             var l_ray = m_camera.ScreenPointToRay(Input.mousePosition);
 
             if (!Physics.Raycast(l_ray, out RaycastHit l_hit, 300f, boidMask))
-                return;
-
-            if (!l_hit.transform.TryGetComponent(out BoidsModel l_boidModel))
             {
                 if (m_previousSelectedModel != null)
                 {
@@ -46,6 +43,9 @@ namespace _Main.Scripts.Managers
                 }
                 return;
             }
+
+            if (!l_hit.transform.TryGetComponent(out BoidsModel l_boidModel)) 
+                return;
             
             if(l_boidModel == m_previousSelectedModel)
                 return;
