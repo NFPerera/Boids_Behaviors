@@ -500,6 +500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c530a33f2b8349568459734d903c80ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oppositeSide: {fileID: 2060473088}
 --- !u!65 &551200512
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -566,6 +567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c530a33f2b8349568459734d903c80ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oppositeSide: {fileID: 1892726899}
 --- !u!65 &554171564
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -715,6 +717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c530a33f2b8349568459734d903c80ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oppositeSide: {fileID: 1496847825}
 --- !u!65 &748727645
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -762,8 +765,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1503882353}
   - {fileID: 1770705651}
@@ -1170,6 +1173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c530a33f2b8349568459734d903c80ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oppositeSide: {fileID: 748727645}
 --- !u!65 &1496847825
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1430,6 +1434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c530a33f2b8349568459734d903c80ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oppositeSide: {fileID: 554171564}
 --- !u!65 &1892726899
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1538,7 +1543,7 @@ Transform:
   m_GameObject: {fileID: 1929551754}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -130}
+  m_LocalPosition: {x: 0, y: 0, z: -197.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1658,6 +1663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c530a33f2b8349568459734d903c80ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oppositeSide: {fileID: 551200512}
 --- !u!65 &2060473088
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1794,15 +1800,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7126746386242698087, guid: 2c8150f381d4a6c44953f3b4f05b22f6, type: 3}
       propertyPath: spawnArea3dHalfExtent.x
-      value: 30
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 7126746386242698087, guid: 2c8150f381d4a6c44953f3b4f05b22f6, type: 3}
       propertyPath: spawnArea3dHalfExtent.y
-      value: 30
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 7126746386242698087, guid: 2c8150f381d4a6c44953f3b4f05b22f6, type: 3}
       propertyPath: spawnArea3dHalfExtent.z
-      value: 30
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 7126746386242698087, guid: 2c8150f381d4a6c44953f3b4f05b22f6, type: 3}
       propertyPath: allFlocksData.Array.size
@@ -1904,7 +1910,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2458166259736968885, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000061035156
+      value: -0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 3747883364017536685, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1912,6 +1918,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3747883364017536685, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3747883364017536685, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5389686716949523338, guid: 4d5ee22aa5aae2143b09e9edf934fa47, type: 3}
