@@ -1,4 +1,5 @@
-﻿using _Main.Scripts.Enum;
+﻿using System;
+using _Main.Scripts.Enum;
 using _Main.Scripts.ScriptableObjects;
 using UnityEngine;
 
@@ -22,6 +23,7 @@ namespace _Main.Scripts.Boids
         private BoidsData m_data;
         private bool m_isBoidSelected;
 
+        private event Action ShowFOV;
         private void Awake()
         {
             m_model = GetComponent<BoidsModel>();
@@ -34,6 +36,22 @@ namespace _Main.Scripts.Boids
             m_meshFilter = GetComponent<MeshFilter>();
             m_visionConeMesh = new Mesh();
             m_data = m_model.GetData();
+        }
+
+        public void Initialize(bool p_is2d)
+        {
+            if (p_is2d)
+                ShowFOV += Generate2dFovView;
+            else
+                ShowFOV += Generate3dFovView;
+        }
+
+        private void OnDestroy()
+        {
+            if (m_model.Is2D)
+                ShowFOV -= Generate2dFovView;
+            else
+                ShowFOV -= Generate3dFovView;
         }
 
         public void RefreshFlockView(FlockData p_data)
@@ -60,138 +78,71 @@ namespace _Main.Scripts.Boids
             if(!m_isBoidSelected)
                 return;
             
-            Generate3dFovView();
+            ShowFOV?.Invoke();
         }
 
         #region Fov_View
         
         private void Generate3dFovView()
         {
-            m_meshFilter.mesh = m_visionConeMesh;
+            int l_totalVertices = (visionConeResolution + 1) * (visionConeResolution + 1);
+            Vector3[] l_vertices = new Vector3[l_totalVertices];
+            int[] l_triangles = new int[visionConeResolution * visionConeResolution * 6];
 
-            // Vertices
-            Vector3[] l_vertices = new Vector3[(visionConeResolution + 1) * 2 + 1];
-            float l_angleIncrement = (m_data.GetStatById(BoidsStatsIds.ViewAngle) * 2) / visionConeResolution;
+            l_vertices[0] = Vector3.zero;
+            float l_viewAngle = m_data.GetStatById(BoidsStatsIds.ViewAngle);
+            float l_viewRange = m_data.GetStatById(BoidsStatsIds.ViewRange);
+            float l_angleStep = l_viewAngle / visionConeResolution;
+            float l_currentAngleY = -l_viewAngle / 2f;
 
-            for (int i = 0; i <= visionConeResolution; i++)
+            int l_vertIndex = 1;
+            int l_triIndex = 0;
+
+            for (int l_y = 0; l_y <= visionConeResolution; l_y++)
             {
-                float l_angleRad = Mathf.Deg2Rad * l_angleIncrement * i;
-                
-                
-                var l_centerOffset = Mathf.Deg2Rad * (90f - m_data.GetStatById(BoidsStatsIds.ViewAngle)/2);
-                
-                float l_x = Mathf.Cos(l_angleRad + l_centerOffset) * m_data.GetStatById(BoidsStatsIds.ViewRange) * 2;
-                float l_z = Mathf.Sin(l_angleRad + l_centerOffset) * m_data.GetStatById(BoidsStatsIds.ViewRange) * 2;
-                
-                l_vertices[i] = new Vector3(l_x, -visionConeHeight, l_z);
-                l_vertices[i + visionConeResolution + 1] = new Vector3(l_x,  + visionConeHeight, l_z );
+                float l_currentAngleX = -l_viewAngle / 2f;
+
+                for (int l_x = 0; l_x <= visionConeResolution; l_x++)
+                {
+                    float l_radianY = l_currentAngleY * Mathf.Deg2Rad;
+                    float l_radianX = l_currentAngleX * Mathf.Deg2Rad;
+
+                    Vector3 l_direction = new Vector3(Mathf.Sin(l_radianY) * Mathf.Cos(l_radianX), Mathf.Sin(l_radianX), Mathf.Cos(l_radianY) * Mathf.Cos(l_radianX));
+                    Vector3 l_vertex = l_direction * l_viewRange;
+                    
+                    if (l_vertIndex < l_totalVertices)
+                    {
+                        l_vertices[l_vertIndex] = l_vertex;
+                    }
+
+                    if (l_x < visionConeResolution && l_y < visionConeResolution && l_vertIndex + visionConeResolution + 2 < l_totalVertices)
+                    {
+                        l_triangles[l_triIndex] = l_vertIndex;
+                        l_triangles[l_triIndex + 1] = l_vertIndex + visionConeResolution + 1;
+                        l_triangles[l_triIndex + 2] = l_vertIndex + 1;
+
+                        l_triangles[l_triIndex + 3] = l_vertIndex + 1;
+                        l_triangles[l_triIndex + 4] = l_vertIndex + visionConeResolution + 1;
+                        l_triangles[l_triIndex + 5] = l_vertIndex + visionConeResolution + 2;
+
+                        l_triIndex += 6;
+                    }
+
+                    l_vertIndex++;
+                    l_currentAngleX += l_angleStep;
+                }
+                l_currentAngleY += l_angleStep;
             }
-            l_vertices[l_vertices.Length - 1] = fovOffset.position;
 
-            
-            int[] l_triangles = new int[visionConeResolution * 6];
-            for (int i = 0, vi = 0; i < visionConeResolution * 3; i += 6, vi++)
-            {
-                l_triangles[i] = vi;
-                l_triangles[i + 1] = (vi + 1) % (visionConeResolution + 1);
-                l_triangles[i + 2] = vi + visionConeResolution + 1;
-
-                l_triangles[i + 3] = vi + visionConeResolution + 1;
-                l_triangles[i + 4] = (vi + 1) % (visionConeResolution + 1);
-                l_triangles[i + 5] = (vi + 1) % (visionConeResolution + 1) + visionConeResolution + 1;
-            }
-
-            // Normals
-            Vector3[] l_normals = new Vector3[l_vertices.Length];
-            for (int i = 0; i < l_vertices.Length; i++)
-            {
-                l_normals[i] = Vector3.up;
-            }
-
-            
-            
             m_visionConeMesh.Clear();
             m_visionConeMesh.vertices = l_vertices;
             m_visionConeMesh.triangles = l_triangles;
-            m_visionConeMesh.normals = l_normals;
+            m_visionConeMesh.RecalculateNormals();
+            m_meshFilter.mesh = m_visionConeMesh;
         }
         
-        /*
-        private void Generate3dFovView()
-{
-    m_meshFilter.mesh = m_visionConeMesh;
 
-    // Vertices
-    int numTriangles = (visionConeResolution + 1) * 6; // Number of triangles before adding additional ones
-    int numVertices = (visionConeResolution + 1) * 2 + 1 + 4; // Number of vertices including additional ones
-    Vector3[] l_vertices = new Vector3[numVertices];
-    float l_angleIncrement = (m_data.ViewAngle * 2) / visionConeResolution;
-
-    for (int i = 0; i <= visionConeResolution; i++)
-    {
-        float l_angleRad = Mathf.Deg2Rad * l_angleIncrement * i;
-
-        var l_centerOffset = Mathf.Deg2Rad * (90f - m_data.ViewAngle / 2);
-
-        float l_x = Mathf.Cos(l_angleRad + l_centerOffset) * m_data.ViewRange * 2;
-        float l_z = Mathf.Sin(l_angleRad + l_centerOffset) * m_data.ViewRange * 2;
-
-        l_vertices[i] = new Vector3(l_x, -visionConeHeight, l_z);
-        l_vertices[i + visionConeResolution + 1] = new Vector3(l_x, +visionConeHeight, l_z);
-    }
-    l_vertices[numVertices - 5] = fovOffset.position;
-
-    // Add vertices for connecting all four corners
-    // Assuming corners are in clockwise order
-    l_vertices[numVertices - 4] = l_vertices[0];
-    l_vertices[numVertices - 3] = l_vertices[visionConeResolution + 1];
-    l_vertices[numVertices - 2] = l_vertices[visionConeResolution];
-    l_vertices[numVertices - 1] = l_vertices[visionConeResolution * 2 + 1];
-
-    int[] l_triangles = new int[numTriangles + 18]; // Additional 4 triangles
-    for (int i = 0, vi = 0; i < numTriangles; i += 6, vi++)
-    {
-        l_triangles[i] = vi;
-        l_triangles[i + 1] = (vi + 1) % (visionConeResolution + 1);
-        l_triangles[i + 2] = vi + visionConeResolution + 1;
-
-        l_triangles[i + 3] = vi + visionConeResolution + 1;
-        l_triangles[i + 4] = (vi + 1) % (visionConeResolution + 1);
-        l_triangles[i + 5] = (vi + 1) % (visionConeResolution + 1) + visionConeResolution + 1;
-    }
-
-    // Additional triangles connecting corners with the last vertex
-    l_triangles[numTriangles] = numVertices - 1;
-    l_triangles[numTriangles + 1] = numVertices - 4;
-    l_triangles[numTriangles + 2] = numVertices - 3;
-
-    l_triangles[numTriangles + 3] = numVertices - 1;
-    l_triangles[numTriangles + 4] = numVertices - 3;
-    l_triangles[numTriangles + 5] = numVertices - 2;
-
-    l_triangles[numTriangles + 6] = numVertices - 1;
-    l_triangles[numTriangles + 7] = numVertices - 2;
-    l_triangles[numTriangles + 8] = numVertices - 5;
-
-    l_triangles[numTriangles + 9] = numVertices - 1;
-    l_triangles[numTriangles + 10] = numVertices - 5;
-    l_triangles[numTriangles + 11] = numVertices - 4;
-
-    // Normals
-    Vector3[] l_normals = new Vector3[numVertices];
-    for (int i = 0; i < numVertices; i++)
-    {
-        l_normals[i] = Vector3.up;
-    }
-
-    m_visionConeMesh.Clear();
-    m_visionConeMesh.vertices = l_vertices;
-    m_visionConeMesh.triangles = l_triangles;
-    m_visionConeMesh.normals = l_normals;
-}
-
-*/
-        private void DrawVisionCone2D()
+        private void Generate2dFovView()
         {
             int[] l_triangles = new int[(visionConeResolution - 1) * 3];
             Vector3[] l_vertices = new Vector3[visionConeResolution + 1];
@@ -203,8 +154,8 @@ namespace _Main.Scripts.Boids
             {
                 var l_sine = Mathf.Sin(l_currentAngle);
                 var l_cosine = Mathf.Cos(l_currentAngle);
-                Vector3 l_raycastDirection = (fovOffset.forward * l_cosine) + (fovOffset.right * l_sine);
-                Vector3 l_vertForward = (Vector3.forward * l_cosine) + (Vector3.right * l_sine);
+                Vector3 l_raycastDirection = (fovOffset.forward * l_cosine) + (fovOffset.up * l_sine);
+                Vector3 l_vertForward = (Vector3.forward * l_cosine) + (Vector3.up * l_sine);
                 if (Physics.Raycast(fovOffset.position, l_raycastDirection, out RaycastHit l_hit, m_data.GetStatById(BoidsStatsIds.ViewRange),
                         m_data.ObstacleMask))
                 {

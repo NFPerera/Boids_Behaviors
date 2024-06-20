@@ -38,7 +38,9 @@ namespace _Main.Scripts.Boids
             
             m_view.RefreshFlockView(m_currentFlockData);
             Is2D = p_is2D;
+            
             m_controller.Initialize(this);
+            m_view.Initialize(p_is2D);
         }
 
         public BoidsData GetData() => m_data;
