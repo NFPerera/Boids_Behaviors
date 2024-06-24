@@ -6,6 +6,8 @@ namespace _Main.Scripts.DevelopmentUtilities.Extensions
 {
     public static class ListExtensions
     {
+        public static T GetLastElement<T>(this List<T> p_baseList) => p_baseList[^1]; 
+        
         public static T GetRandomElement<T>(this List<T> p_baseList)
         {
             return p_baseList[Random.Range(0, p_baseList.Count)];

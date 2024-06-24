@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using _Main.Scripts.DevelopmentUtilities;
 using _Main.Scripts.Enum;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace _Main.Scripts.Managers
@@ -32,6 +36,8 @@ namespace _Main.Scripts.Managers
         [SerializeField] private List<TMP_Dropdown.OptionData> dropdownOptionDatas;
         [SerializeField] private Button removeFlockButton;
 
+        [Header("Menus")]
+        [SerializeField] private GameObject optionsObj;
         
         private int m_currFlockCount;
         private int m_currFlockId;
@@ -42,7 +48,16 @@ namespace _Main.Scripts.Managers
             m_currFlockCount = 1;
             m_currFlockId = dropdown.value;
             RefreshAllUi();
+            
+            MyInputManager.Instance.SubscribeInputOnPerformed(MyGame.ESCAPE_ID, ToggleOptionsMenu);
         }
+
+        private void OnDestroy()
+        {
+            MyInputManager.Instance.UnsubscribeInputOnPerformed(MyGame.ESCAPE_ID, ToggleOptionsMenu);
+        }
+
+        
 
         public void AddBoidsStat(BoidsStatsModificationsData p_data)
         {
@@ -222,6 +237,20 @@ namespace _Main.Scripts.Managers
             dropdown.value = m_currFlockCount-1;
             dropdown.RefreshShownValue();
         }
-        
+
+
+        private void ToggleOptionsMenu(InputAction.CallbackContext p_obj)
+        {
+            
+            optionsObj.SetActive(!optionsObj.activeSelf);
+            var l_timeScale = optionsObj.activeSelf ? 0 : 1;
+
+            Time.timeScale = l_timeScale;
+        }
+        public void LoadScene(string p_s)
+        {
+            Time.timeScale = 1;
+            SceneManager.LoadScene(p_s);
+        }
     }
 }

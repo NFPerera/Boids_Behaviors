@@ -12,12 +12,13 @@ namespace _Main.Scripts.ScriptableObjects
         [field : SerializeField] public List<SteeringDataState> SteeringBehaviours3D { get; private set; } 
         [field : SerializeField] public List<SteeringDataState> SteeringBehaviours2D { get; private set; } 
         
-        [field: SerializeField] public SerializableDictionary<BoidsStatsIds, float> BaseBoidsStats { get; private set; } 
+        [field: SerializeField] public SerializableDictionary<BoidsStatsIds, float> MinBoidsStats { get; private set; } 
+        [field: SerializeField] public SerializableDictionary<BoidsStatsIds, float> DefaultBoidsStats { get; private set; } 
         [field: SerializeField] public SerializableDictionary<BoidsStatsIds, float> CurrBoidsStats { get; private set; }
         [field: SerializeField] public SerializableDictionary<BoidsStatsIds, float> MaxBoidsStats { get; private set; }
         [field: SerializeField] public LayerMask ObstacleMask { get; private set; }
 
-        public void ResetCurrBoidsStats() => CurrBoidsStats = BaseBoidsStats;
+        public void ResetCurrBoidsStats() => CurrBoidsStats = DefaultBoidsStats;
         public void SetBoidsStat(BoidsStatsIds p_statsIds, float p_f)
         {
             CurrBoidsStats[p_statsIds] = p_f;
@@ -29,9 +30,9 @@ namespace _Main.Scripts.ScriptableObjects
         
         private void CheckUpgradeIsInBounds(BoidsStatsIds p_statsId)
         {
-            if (CurrBoidsStats[p_statsId] < BaseBoidsStats[p_statsId])
+            if (CurrBoidsStats[p_statsId] < MinBoidsStats[p_statsId])
             {
-                CurrBoidsStats[p_statsId] = BaseBoidsStats[p_statsId];
+                CurrBoidsStats[p_statsId] = MinBoidsStats[p_statsId];
             }
             
             if (CurrBoidsStats[p_statsId] > MaxBoidsStats[p_statsId])

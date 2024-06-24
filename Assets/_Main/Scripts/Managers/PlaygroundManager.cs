@@ -1,4 +1,5 @@
-﻿using _Main.Scripts.Boids;
+﻿using System;
+using _Main.Scripts.Boids;
 using _Main.Scripts.DevelopmentUtilities;
 using _Main.Scripts.Interfaces;
 using UnityEngine;
@@ -18,15 +19,13 @@ namespace _Main.Scripts.Managers
             m_camera = Camera.main;
             
             GameManager.Singleton.SetCurrentPlaygroundManager(this);
-            SubscribeInputs();
+            MyInputManager.Instance.SubscribeInputOnPerformed(MyGame.LEFT_CLICK_ID, OnLeftClickPerformed);
             teleportBox.SetActive(false);
         }
 
-        private void SubscribeInputs()
+        private void OnDestroy()
         {
-            var l_manager = MyInputManager.Instance;
-            
-            l_manager.SubscribeInputOnPerformed("LeftClick", OnLeftClickPerformed);
+            MyInputManager.Instance.UnsubscribeInputOnPerformed(MyGame.LEFT_CLICK_ID, OnLeftClickPerformed);
         }
 
         private void OnLeftClickPerformed(InputAction.CallbackContext p_context)
@@ -35,9 +34,6 @@ namespace _Main.Scripts.Managers
             var l_ray = m_camera.ScreenPointToRay(Input.mousePosition);
 
             if (!Physics.Raycast(l_ray, out RaycastHit l_hit, 300f, boidMask))
-                return;
-
-            if (!l_hit.transform.TryGetComponent(out BoidsModel l_boidModel))
             {
                 if (m_previousSelectedModel != null)
                 {
@@ -46,6 +42,9 @@ namespace _Main.Scripts.Managers
                 }
                 return;
             }
+
+            if (!l_hit.transform.TryGetComponent(out BoidsModel l_boidModel)) 
+                return;
             
             if(l_boidModel == m_previousSelectedModel)
                 return;
