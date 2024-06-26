@@ -28,3 +28,4 @@ This project is a didactic tool to understand the multiple behaviors of boids.
 - Custom arena builder
 - "Debug mod" to activate all vectors view in a selected boid
 - "Follow boid" option if a boid is selected
+- Sounds effects
