@@ -62,15 +62,15 @@ namespace _Main.Scripts.Managers
         public void AddBoidsStat(BoidsStatsModificationsData p_data)
         {
             var l_manager = GameManager.Singleton.BoidsManager;
-            var l_newValue = l_manager.GetBoidsDataByFlockId(m_currFlockId).CurrBoidsStats[p_data.boidsStatsIds] +
-                           p_data.modification;
+            var l_previousValue = l_manager.GetBoidsDataByFlockId(m_currFlockId);
+            var l_newValue = l_previousValue.CurrBoidsStats[p_data.boidsStatsIds] + p_data.modification;
             
-            l_manager.SetBoidsStats(m_currFlockId,p_data.boidsStatsIds,l_newValue);
+            l_manager.SetFlockStats(m_currFlockId,p_data.boidsStatsIds,l_newValue);
             RefreshStatUi(p_data.boidsStatsIds);
         }
         public void SetBoidsStat(BoidsStatsModificationsData p_data)
         {
-            GameManager.Singleton.BoidsManager.SetBoidsStats(m_currFlockId,p_data.boidsStatsIds,p_data.modification);
+            GameManager.Singleton.BoidsManager.SetFlockStats(m_currFlockId,p_data.boidsStatsIds,p_data.modification);
             RefreshStatUi(p_data.boidsStatsIds);
         }
 

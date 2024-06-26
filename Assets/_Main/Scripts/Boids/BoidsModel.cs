@@ -110,6 +110,7 @@ namespace _Main.Scripts.Boids
             m_currentFlockData = p_newFlockData;
             m_data = p_newFlockData.BoidsData;
             m_view.RefreshFlockView(m_currentFlockData);
+            
             m_allNeighbors.Clear();
         }
         private void OnTriggerEnter(Collider p_other)

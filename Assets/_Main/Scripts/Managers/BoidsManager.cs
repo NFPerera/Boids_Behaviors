@@ -55,6 +55,11 @@ namespace _Main.Scripts.Managers
 
         private void Start()
         {
+            foreach (var l_flock in allFlocksData)
+            {
+                l_flock.BoidsData.ResetCurrBoidsStats();
+            }
+            
             SpawnBoids(boidsToSpawn);
         }
 
@@ -222,13 +227,15 @@ namespace _Main.Scripts.Managers
             for (int i = 0; i < m_allBoids.Count; i++)
             {
                 var l_flockData = m_activeFlocksData[i % p_flockAmount];
+                
                 var l_boid = m_allBoids[i];
+                
                 l_boid.ChangeFlock(l_flockData);
             }
         }
 
         private FlockData GetNextFlockData() => allFlocksData[m_allBoids.Count % m_activeFlocksData.Count];
-        public void SetBoidsStats(int p_flockId,BoidsStatsIds p_statsIds, float p_f)
+        public void SetFlockStats(int p_flockId,BoidsStatsIds p_statsIds, float p_f)
         {
             m_activeFlocksData[p_flockId].BoidsData.SetBoidsStat(p_statsIds, p_f);
         }
