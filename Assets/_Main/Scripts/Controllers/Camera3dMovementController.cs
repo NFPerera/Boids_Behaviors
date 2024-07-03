@@ -91,7 +91,7 @@ namespace _Main.Scripts.Controllers
         private void OnRightClickOnCanceled(InputAction.CallbackContext p_obj)
         {
             var  l_instance=MyInputManager.Instance;
-            Debug.Log(MyGame.CAMERA_MOVEMENT_ID);
+            
             l_instance.UnsubscribeInputOnPerformed(MyGame.CAMERA_MOVEMENT_ID, OnCameraMovementPerformed);
             l_instance.UnsubscribeInputOnPerformed(MyGame.CAMERA_ROTATION_ID, OnCameraRotationPerformed);
             l_instance.UnsubscribeInputOnCanceled(MyGame.CAMERA_ROTATION_ID, OnCameraRotationCanceled);
